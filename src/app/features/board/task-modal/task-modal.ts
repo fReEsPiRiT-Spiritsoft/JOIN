@@ -21,7 +21,6 @@ export class TaskModal implements OnInit {
 
   private contactService = inject(ContactService);
 
-  // Formular-Daten
   title = '';
   description = '';
   dueDate = '';
@@ -32,15 +31,12 @@ export class TaskModal implements OnInit {
   newSubtaskTitle = '';
   editingSubtaskId: string | null = null;
 
-  // Dropdown States
   showCategoryDropdown = false;
   showContactDropdown = false;
 
-  // Daten
   contacts: Contact[] = [];
   categories = ['Technical Task', 'User Story'];
 
-  // Validierung
   titleError = false;
   dueDateError = false;
   categoryError = false;

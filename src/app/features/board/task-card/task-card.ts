@@ -111,7 +111,6 @@ export class TaskCard implements OnInit {
    * Gibt die Farbe für die Category-Badge zurück
    */
   getCategoryColor(): string {
-    // Mapping von Category-Namen zu Farben
     const categoryColors: { [key: string]: string } = {
       'User Story': '#0038FF',
       'Technical Task': '#1FD7C1',

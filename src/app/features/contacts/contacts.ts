@@ -74,7 +74,6 @@ export class Contacts implements OnInit {
   }
 
   async handleCreateContact(contactData: Partial<Contact>) {
-    // Validierung wird jetzt in der Form-Component gemacht
     const contactsRef = collection(this.firestore, 'contacts');
     const docRef = await addDoc(contactsRef, contactData);
     const contact: Contact = { id: docRef.id, ...(contactData as Contact) };
@@ -86,7 +85,7 @@ export class Contacts implements OnInit {
   }
 
   async handleSaveContact(contactData: Partial<Contact>) {
-    // Validierung wird jetzt in der Form-Component gemacht
+
     if (contactData.id) {
       const contactRef = doc(this.firestore, 'contacts', contactData.id);
       await updateDoc(contactRef, {

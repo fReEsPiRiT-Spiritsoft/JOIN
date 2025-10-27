@@ -1,0 +1,11 @@
+<div class="progress-bar">
+    <div class="progress-bar__track" [class.progress-bar__track--small]="height === 'small'"
+        [class.progress-bar__track--medium]="height === 'medium'">
+        <div class="progress-bar__fill" [style.width.%]="progressPercentage" [style.background-color]="color">
+        </div>
+    </div>
+
+    @if (label) {
+    <span class="progress-bar__label">{{ label }}</span>
+    }
+</div>

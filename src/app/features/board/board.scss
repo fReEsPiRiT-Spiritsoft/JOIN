@@ -10,9 +10,13 @@
   gap: 24px;
   min-height: 500px;
   align-items: flex-start;
-  justify-content: space-between;
   max-width: 1688px;
   padding: 0 64px;
+
+  app-board-columns {
+    flex: 1;
+    min-width: 250px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -26,7 +30,7 @@
     padding: 0 24px;
     gap: 32px;
     min-height: auto;
-    
+
     app-board-columns {
       width: 100%;
       max-width: 600px;
@@ -42,7 +46,7 @@
   .board-columns-wrapper {
     padding: 0 16px;
     gap: 24px;
-    
+
     app-board-columns {
       width: 100%;
     }

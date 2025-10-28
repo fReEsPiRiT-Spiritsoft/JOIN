@@ -53,14 +53,24 @@
 }
 
 .empty-state {
-  border: 2px dashed #d1d1d1;
-  border-radius: 8px;
-  padding: 24px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  height: 48px;
+  background: #e7e7e7;
+  border: 1px dashed #a8a8a8;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+  border-radius: 10px;
 
   p {
     color: #a8a8a8;
     margin: 0;
-    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;
   }
 }

@@ -70,7 +70,7 @@
             <div class="form-group">
               <label>Assigned to</label>
               <div class="dropdown-wrapper">
-                <div class="dropdown-toggle" (click)="toggleContactDropdown()" [class.error]="false">
+                <div class="dropdown-toggle" (click)="toggleContactDropdown()">
                   <span>Select contacts to assign</span>
                   <svg width="14" height="8" viewBox="0 0 14 8" fill="none" [class.rotated]="showContactDropdown">
                     <path d="M1 1L7 7L13 1" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
@@ -80,15 +80,15 @@
                 @if (showContactDropdown) {
                 <div class="dropdown-menu contacts-dropdown">
                   @for (contact of contacts; track contact.id) {
-                  <div class="contact-item" (click)="toggleContact(contact.id!)">
+                  <div class="contact-item" (click)="toggleContact(contact.id!, $event)">
                     <div class="contact-info">
                       <div class="avatar" [style.background-color]="getAvatarColor(contact)">
                         {{ getInitials(contact) }}
                       </div>
                       <span>{{ contact.firstname }}</span>
                     </div>
-                    <input type="checkbox" [checked]="isContactSelected(contact.id!)"
-                      (click)="$event.stopPropagation()" />
+                    <input type="checkbox" [checked]="isContactSelected(contact.id!)" (change)="$event.stopPropagation()"
+                      readonly />
                   </div>
                   }
                 </div>

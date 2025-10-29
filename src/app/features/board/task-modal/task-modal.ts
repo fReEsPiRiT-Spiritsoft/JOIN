@@ -20,7 +20,7 @@ import { Timestamp } from '@angular/fire/firestore';
   selector: 'app-task-modal',
   imports: [CommonModule, FormsModule],
   templateUrl: './task-modal.html',
-  styleUrl: './task-modal.scss',
+  styleUrls: ['./task-modal.scss', './task-modal2.scss'],
   standalone: true,
 })
 export class TaskModal implements OnInit {
@@ -66,7 +66,13 @@ export class TaskModal implements OnInit {
 
   @HostListener('document:keydown.escape')
   onEscapeKey() {
-    if (this.showModal && !this.showCategoryDropdown && !this.showContactDropdown) {
+    if (this.showCategoryDropdown || this.showContactDropdown) {
+      this.showCategoryDropdown = false;
+      this.showContactDropdown = false;
+      return;
+    }
+
+    if (this.showModal && !this.showSuccessToast) {
       this.onClose();
     }
   }
@@ -95,17 +101,32 @@ export class TaskModal implements OnInit {
     }
   }
 
-  toggleContact(contactId: string) {
+
+  toggleContact(contactId: string, event?: MouseEvent) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    console.log('Toggling contact:', contactId);
+    console.log('Before:', this.selectedContactIds);
+
     const index = this.selectedContactIds.indexOf(contactId);
+
     if (index > -1) {
       this.selectedContactIds.splice(index, 1);
+      console.log('Removed');
     } else {
       this.selectedContactIds.push(contactId);
+      console.log('Added');
     }
+
+    console.log('After:', this.selectedContactIds);
   }
 
+
   isContactSelected(contactId: string): boolean {
-    return this.selectedContactIds.includes(contactId);
+    const isSelected = this.selectedContactIds.includes(contactId);
+    return isSelected;
   }
 
   getSelectedContacts(): Contact[] {
@@ -130,7 +151,6 @@ export class TaskModal implements OnInit {
   }
 
   onSubtaskInputBlur() {
-    // Verzögerung, damit der Click auf den Button noch registriert wird
     setTimeout(() => {
       if (!this.newSubtaskTitle) {
         this.subtaskInputFocused = false;
@@ -155,7 +175,7 @@ export class TaskModal implements OnInit {
 
   formatDateInput(event: Event) {
     const input = event.target as HTMLInputElement;
-    let value = input.value.replace(/\D/g, ''); // Entfernt alle Nicht-Zahlen
+    let value = input.value.replace(/\D/g, '');
 
     if (value.length >= 2) {
       value = value.substring(0, 2) + '/' + value.substring(2);
@@ -173,7 +193,7 @@ export class TaskModal implements OnInit {
 
   onDatePickerChange(event: Event) {
     const input = event.target as HTMLInputElement;
-    const dateValue = input.value; // Format: yyyy-mm-dd
+    const dateValue = input.value;
 
     if (dateValue) {
       const [year, month, day] = dateValue.split('-');
@@ -193,22 +213,9 @@ export class TaskModal implements OnInit {
   }
 
   colorPalette = [
-    '#FF7A00',
-    '#9327FF',
-    '#6E52FF',
-    '#FC71FF',
-    '#FFBB2B',
-    '#1FD7C1',
-    '#462F8A',
-    '#FF4646',
-    '#00BEE8',
-    '#FF5EB3',
-    '#FF745E',
-    '#FFA35E',
-    '#FFC701',
-    '#0038FF',
-    '#C3FF2B',
-    '#FFE62B',
+    '#FF7A00', '#9327FF', '#6E52FF', '#FC71FF', '#FFBB2B', '#1FD7C1',
+    '#462F8A', '#FF4646', '#00BEE8', '#FF5EB3', '#FF745E', '#FFA35E',
+    '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B',
   ];
 
   getAvatarColor(contact: Contact): string {
@@ -264,16 +271,18 @@ export class TaskModal implements OnInit {
       priority: this.priority,
       category: this.category,
       status: this.defaultStatus,
-      assignedTo: this.selectedContactIds,
+      assignedTo: [...this.selectedContactIds], // KORRIGIERT - Array kopieren
       subtasks: this.subtasks,
     };
+
     this.taskCreated.emit(newTask);
     this.showSuccessToast = true;
+
     setTimeout(() => {
       this.showSuccessToast = false;
       this.resetForm();
       this.closeModal.emit();
-    }, 2000);
+    }, 1500);
   }
 
   resetForm() {
@@ -298,10 +307,20 @@ export class TaskModal implements OnInit {
   }
 
   onOverlayClick() {
-    this.onClose();
+    if (!this.showSuccessToast) {
+      this.onClose();
+    }
   }
 
   onModalClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const clickedInsideDropdown = target.closest('.dropdown-wrapper');
+
+    if (!clickedInsideDropdown) {
+      this.showCategoryDropdown = false;
+      this.showContactDropdown = false;
+    }
+
     event.stopPropagation();
   }
 }

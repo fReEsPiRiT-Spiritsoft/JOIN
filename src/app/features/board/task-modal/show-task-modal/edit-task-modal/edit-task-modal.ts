@@ -290,6 +290,12 @@ export class EditTaskModal implements OnInit, OnChanges {
   }
 
   onModalClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const clickedInsideDropdown = target.closest('.dropdown-wrapper');
+    if (!clickedInsideDropdown) {
+      this.showCategoryDropdown = false;
+      this.showContactDropdown = false;
+    }
     event.stopPropagation();
   }
 }

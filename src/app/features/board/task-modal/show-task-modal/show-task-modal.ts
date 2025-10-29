@@ -27,6 +27,9 @@ export class ShowTaskModal implements OnInit, OnChanges {
   assignedContacts: Contact[] = [];
   showEditModal = false;
 
+  showCategoryDropdown = false;
+  showContactDropdown = false;
+
   async ngOnInit() {
     await this.loadContacts();
   }
@@ -171,6 +174,12 @@ export class ShowTaskModal implements OnInit, OnChanges {
   }
 
   onModalClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const clickedInsideDropdown = target.closest('.dropdown-wrapper');
+    if (!clickedInsideDropdown) {
+      this.showCategoryDropdown = false;
+      this.showContactDropdown = false;
+    }
     event.stopPropagation();
   }
 }

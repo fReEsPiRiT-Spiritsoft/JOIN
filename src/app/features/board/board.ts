@@ -24,7 +24,7 @@ export class Board implements OnInit, OnDestroy {
     todo: [] as Task[],
     inprogress: [] as Task[],
     awaitfeedback: [] as Task[],
-    done: [] as Task[]
+    done: [] as Task[],
   };
 
   columns = [
@@ -80,7 +80,7 @@ export class Board implements OnInit, OnDestroy {
 
   findTaskById(taskId: string): Task | null {
     for (const column of this.columns) {
-      const task = column.tasks.find(t => t.id === taskId);
+      const task = column.tasks.find((t) => t.id === taskId);
       if (task) {
         return task;
       }
@@ -106,7 +106,8 @@ export class Board implements OnInit, OnDestroy {
       this.columns[2].tasks = this.filterTasks(this.allTasks.awaitfeedback);
       this.columns[3].tasks = this.filterTasks(this.allTasks.done);
 
-      const totalFound = this.columns[0].tasks.length +
+      const totalFound =
+        this.columns[0].tasks.length +
         this.columns[1].tasks.length +
         this.columns[2].tasks.length +
         this.columns[3].tasks.length;
@@ -116,17 +117,17 @@ export class Board implements OnInit, OnDestroy {
   }
 
   filterTasks(tasks: Task[]): Task[] {
-    return tasks.filter(task => {
+    return tasks.filter((task) => {
       const matchesTitle = task.title.toLowerCase().includes(this.searchQuery);
-      const matchesDescription = task.description &&
-        task.description.toLowerCase().includes(this.searchQuery);
+      const matchesDescription =
+        task.description && task.description.toLowerCase().includes(this.searchQuery);
 
       return matchesTitle || matchesDescription;
     });
   }
 
   async onTaskDrop(event: CdkDragDrop<Task[]>) {
- if (event.previousContainer === event.container) {
+    if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       const task = event.previousContainer.data[event.previousIndex];
@@ -154,7 +155,6 @@ export class Board implements OnInit, OnDestroy {
   getStatusFromContainerId(containerId: string): 'todo' | 'inprogress' | 'awaitfeedback' | 'done' {
     return containerId as 'todo' | 'inprogress' | 'awaitfeedback' | 'done';
   }
-
 
   openAddTaskModal(status: string) {
     this.defaultStatus = status as 'todo' | 'inprogress' | 'awaitfeedback' | 'done';
@@ -194,6 +194,16 @@ export class Board implements OnInit, OnDestroy {
       this.closeViewTaskModal();
     } catch (error) {
       console.error('Error deleting task:', error);
+    }
+  }
+
+  async onSubtaskToggled(event: { task: Task; subtask: any }) {
+    try {
+      await this.taskService.updateTask(event.task.id!, event.task);
+    } catch (error) {
+      console.error('Error updating subtask:', error);
+      // Revert the change on error
+      event.subtask.completed = !event.subtask.completed;
     }
   }
 }

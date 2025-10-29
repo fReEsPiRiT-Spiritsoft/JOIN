@@ -20,6 +20,7 @@ export class BoardColumns {
   @Output() addTaskClicked = new EventEmitter<string>();
   @Output() taskClicked = new EventEmitter<Task>();
   @Output() taskDropped = new EventEmitter<CdkDragDrop<Task[]>>();
+  @Output() subtaskToggled = new EventEmitter<{ task: Task; subtask: any }>();
 
   isHovering = false;
 
@@ -33,5 +34,9 @@ export class BoardColumns {
 
   onTaskClick(task: Task) {
     this.taskClicked.emit(task);
+  }
+
+  onSubtaskToggled(event: { task: Task; subtask: any }) {
+    this.subtaskToggled.emit(event);
   }
 }

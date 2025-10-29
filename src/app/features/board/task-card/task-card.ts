@@ -1,4 +1,13 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Task } from '../../../core/interfaces/board-tasks-interface';
@@ -16,17 +25,13 @@ import { PriorityIcon } from '../../../shared/components/priority-icon/priority-
 export class TaskCard implements OnInit, OnChanges {
   @Input() task!: Task;
   @Output() cardClicked = new EventEmitter<Task>();
-  @Output() subtaskEdited = new EventEmitter<{ task: Task; subtask: any }>();
-  @Output() subtaskDeleted = new EventEmitter<{ task: Task; subtask: any }>();
+  @Output() subtaskToggled = new EventEmitter<{ task: Task; subtask: any }>();
 
   private contactService = inject(ContactService);
 
   contacts: Contact[] = [];
   assignedContacts: Contact[] = [];
-  hoveredSubtaskId: string | null = null;
   showSubtasks = false;
-  editingSubtaskId: string | null = null;
-  editingSubtaskTitle = '';
 
   async ngOnInit() {
     await this.loadContacts();
@@ -37,7 +42,7 @@ export class TaskCard implements OnInit, OnChanges {
       if (this.contacts.length === 0) {
         await this.loadContacts();
       }
-      
+
       this.updateAssignedContacts();
     }
   }
@@ -48,9 +53,7 @@ export class TaskCard implements OnInit, OnChanges {
       return;
     }
 
-    this.assignedContacts = this.contacts.filter((c) =>
-      this.task.assignedTo.includes(c.id!)
-    );
+    this.assignedContacts = this.contacts.filter((c) => this.task.assignedTo.includes(c.id!));
   }
 
   async loadContacts() {
@@ -80,9 +83,22 @@ export class TaskCard implements OnInit, OnChanges {
   }
 
   colorPalette = [
-    '#FF7A00', '#9327FF', '#6E52FF', '#FC71FF', '#FFBB2B', '#1FD7C1',
-    '#462F8A', '#FF4646', '#00BEE8', '#FF5EB3', '#FF745E', '#FFA35E',
-    '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B',
+    '#FF7A00',
+    '#9327FF',
+    '#6E52FF',
+    '#FC71FF',
+    '#FFBB2B',
+    '#1FD7C1',
+    '#462F8A',
+    '#FF4646',
+    '#00BEE8',
+    '#FF5EB3',
+    '#FF745E',
+    '#FFA35E',
+    '#FFC701',
+    '#0038FF',
+    '#C3FF2B',
+    '#FFE62B',
   ];
 
   getAvatarColor(contact: Contact): string {
@@ -107,30 +123,12 @@ export class TaskCard implements OnInit, OnChanges {
     return categoryColors[this.task.category] || '#0038FF';
   }
 
-  onEditSubtask(subtask: any): void {
-    this.editingSubtaskId = subtask.id;
-    this.editingSubtaskTitle = subtask.title;
+  toggleSubtasks(): void {
+    this.showSubtasks = !this.showSubtasks;
   }
 
-  saveSubtaskEdit(subtask: any): void {
-    if (this.editingSubtaskTitle.trim()) {
-      subtask.title = this.editingSubtaskTitle.trim();
-      this.subtaskEdited.emit({ task: this.task, subtask });
-    }
-    this.cancelSubtaskEdit();
-  }
-
-  cancelSubtaskEdit(): void {
-    this.editingSubtaskId = null;
-    this.editingSubtaskTitle = '';
-  }
-
-  onDeleteSubtask(subtask: any): void {
-    this.task.subtasks = this.task.subtasks.filter((s) => s.id !== subtask.id);
-    this.subtaskDeleted.emit({ task: this.task, subtask });
-  }
-
-  isEditing(subtaskId: string): boolean {
-    return this.editingSubtaskId === subtaskId;
+  toggleSubtaskCompletion(subtask: any): void {
+    subtask.completed = !subtask.completed;
+    this.subtaskToggled.emit({ task: this.task, subtask });
   }
 }

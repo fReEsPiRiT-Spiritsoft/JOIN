@@ -106,21 +106,12 @@ export class TaskModal implements OnInit {
     if (event) {
       event.stopPropagation();
     }
-
-    console.log('Toggling contact:', contactId);
-    console.log('Before:', this.selectedContactIds);
-
     const index = this.selectedContactIds.indexOf(contactId);
-
     if (index > -1) {
       this.selectedContactIds.splice(index, 1);
-      console.log('Removed');
     } else {
       this.selectedContactIds.push(contactId);
-      console.log('Added');
     }
-
-    console.log('After:', this.selectedContactIds);
   }
 
 

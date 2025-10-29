@@ -376,4 +376,12 @@ export class TaskModal implements OnInit {
       imgElement.src = 'assets/board/arrow-drop-down-transparent.png';
     }
   }
+
+  onSubtaskCheckHover(imgElement: HTMLImageElement) {
+    imgElement.src = 'assets/board/check-dark-hover.png';
+  }
+
+  onSubtaskCheckLeave(imgElement: HTMLImageElement) {
+    imgElement.src = 'assets/board/check-dark-default.png';
+  }
 }

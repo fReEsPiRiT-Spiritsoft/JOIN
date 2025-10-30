@@ -12,6 +12,7 @@ export interface Task {
   subtasks: Subtask[];
   createdAt: Timestamp;
   updatedAt?: Timestamp;
+  order?: number;
 }
 
 export interface Subtask {

@@ -56,19 +56,16 @@ export class Board implements OnInit, OnDestroy {
     this.isLoading = true;
     this.tasksSubscription = this.taskService.getTasksByStatus().subscribe({
       next: (tasks) => {
-        this.allTasks.todo = tasks.todo;
-        this.allTasks.inprogress = tasks.inprogress;
-        this.allTasks.awaitfeedback = tasks.awaitfeedback;
-        this.allTasks.done = tasks.done;
-
-        // Update selectedTask if modal is open
+        this.allTasks.todo = tasks.todo.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        this.allTasks.inprogress = tasks.inprogress.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        this.allTasks.awaitfeedback = tasks.awaitfeedback.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        this.allTasks.done = tasks.done.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
         if (this.showViewTaskModal && this.selectedTask && this.selectedTask.id) {
           const updatedTask = this.findTaskById(this.selectedTask.id);
           if (updatedTask) {
             this.selectedTask = { ...updatedTask };
           }
         }
-
         this.updateDisplayedTasks();
         this.isLoading = false;
       },
@@ -114,6 +111,9 @@ export class Board implements OnInit, OnDestroy {
 
       this.searchError = totalFound === 0 ? 'No tasks found' : '';
     }
+    this.columns.forEach(col => {
+      col.tasks.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    });
   }
 
   filterTasks(tasks: Task[]): Task[] {

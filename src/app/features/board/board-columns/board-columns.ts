@@ -1,9 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { Task } from '../../../core/interfaces/board-tasks-interface';
 import { TaskCard } from '../task-card/task-card';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { BoardTasksService } from '../../../core/services/board-tasks-service';
+import { Firestore, writeBatch, doc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-board-columns',
@@ -22,6 +24,9 @@ export class BoardColumns {
   @Output() taskDropped = new EventEmitter<CdkDragDrop<Task[]>>();
   @Output() subtaskToggled = new EventEmitter<{ task: Task; subtask: any }>();
 
+  private taskService = inject(BoardTasksService);
+  private firestore = inject(Firestore); // ✅ DIESE ZEILE HINZUFÜGEN
+
   isHovering = false;
 
   get addTaskIcon(): string {
@@ -38,5 +43,41 @@ export class BoardColumns {
 
   onSubtaskToggled(event: { task: Task; subtask: any }) {
     this.subtaskToggled.emit(event);
+  }
+
+  async onDrop(event: CdkDragDrop<Task[]>) {
+    const task = event.item.data as Task;
+    
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      await this.updateTaskOrder(event.container.data);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      
+      task.status = this.columnId as 'todo' | 'inprogress' | 'awaitfeedback' | 'done';
+      await this.taskService.updateTask(task.id!, task);
+      await this.updateTaskOrder(event.previousContainer.data);
+      await this.updateTaskOrder(event.container.data);
+    }
+    
+    this.taskDropped.emit(event);
+  }
+
+  private async updateTaskOrder(tasks: Task[]) {
+    const batch = writeBatch(this.firestore);
+    
+    tasks.forEach((task, index) => {
+      if (task.id) {
+        const taskRef = doc(this.firestore, 'tasks', task.id);
+        batch.update(taskRef, { order: index });
+      }
+    });
+
+    await batch.commit();
   }
 }

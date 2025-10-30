@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   padding: 8px 16px;
-  gap: 12px;
+  gap: 4px;
   width: 160px;
   height: 48px;
   background: #2a3647;
@@ -27,17 +27,16 @@
   }
 
   .plus-icon {
-    width: 18px;
-    height: 18px;
-    max-width: 18px;
-    max-height: 18px;
+    width: 32px;
+    height: 32px;
+    max-width: 32px;
+    max-height: 32px;
     object-fit: contain;
     display: block;
     flex: none;
     order: 1;
     flex-grow: 0;
     flex-shrink: 0;
-    margin-top: -2px;
   }
 
   &:hover {

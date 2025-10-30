@@ -27,16 +27,16 @@
   }
 
   .plus-icon {
-    width: 32px;
-    height: 32px;
-    max-width: 32px;
-    max-height: 32px;
+    width: 19px;
+    height: 19px;
     object-fit: contain;
     display: block;
     flex: none;
     order: 1;
     flex-grow: 0;
     flex-shrink: 0;
+    margin-left: 4px;
+    margin-bottom: 2px;
   }
 
   &:hover {

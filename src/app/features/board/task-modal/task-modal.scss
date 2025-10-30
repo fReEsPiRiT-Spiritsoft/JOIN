@@ -94,7 +94,7 @@ form {
 .form-left {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
   width: 440px;
   flex-shrink: 0;
 }
@@ -102,7 +102,7 @@ form {
 .form-right {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
   width: 440px;
   flex-shrink: 0;
 }
@@ -117,11 +117,19 @@ form {
   flex-grow: 0;
   padding-bottom: 20px; // Platz für Error Message (16px) + 4px gap
 
+  &.has-selected-contacts {
+    padding-bottom: 0;
+  }
+
   // Nur für form-groups mit input-wrapper die spezifischen Layout-Properties
   &:has(.input-wrapper) {
     align-items: flex-start;
     padding: 0px 0px 20px 0px;
     width: 440px;
+  }
+
+  &:has(.input-wrapper).has-selected-contacts {
+    padding: 0;
   }
 
   label {

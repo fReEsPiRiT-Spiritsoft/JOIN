@@ -59,6 +59,7 @@ export class TaskModal implements OnInit {
   categoryError = false;
 
   @ViewChild('datePicker') datePicker!: ElementRef<HTMLInputElement>;
+  @ViewChild('subtasksList') subtasksList!: ElementRef<HTMLDivElement>;
 
   async ngOnInit() {
     await this.loadContacts();
@@ -183,6 +184,13 @@ export class TaskModal implements OnInit {
       });
       this.newSubtaskTitle = '';
       this.subtaskInputFocused = false;
+
+      // Scroll to bottom after adding
+      setTimeout(() => {
+        if (this.subtasksList) {
+          this.subtasksList.nativeElement.scrollTop = this.subtasksList.nativeElement.scrollHeight;
+        }
+      }, 0);
     }
   }
 

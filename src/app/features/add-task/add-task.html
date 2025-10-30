@@ -87,7 +87,7 @@
                 </div>
 
                 <!-- Assigned to Field -->
-                <div class="form-field">
+                <div class="form-field" [class.has-selected-contacts]="selectedContactIds.length > 0">
                     <label for="assignedTo">Assigned to</label>
                     <div class="dropdown-wrapper">
                         <div class="dropdown-toggle-input">
@@ -124,16 +124,23 @@
                         </div>
                         }
 
-                        @if (selectedContactIds.length > 0) {
-                        <div class="selected-contacts">
-                            @for (contact of getSelectedContacts(); track contact.id) {
-                            <div class="avatar small" [style.background-color]="getAvatarColor(contact)"
-                                [title]="contact.firstname">
-                                {{ getInitials(contact) }}
+                        <div class="selected-contacts-container">
+                            @if (selectedContactIds.length > 0) {
+                            <div class="selected-contacts">
+                                @for (contact of getSelectedContacts().slice(0, 9); track contact.id) {
+                                <div class="avatar small" [style.background-color]="getAvatarColor(contact)"
+                                    [title]="contact.firstname">
+                                    {{ getInitials(contact) }}
+                                </div>
+                                }
+                                @if (selectedContactIds.length > 9) {
+                                <div class="avatar small more-contacts">
+                                    +{{ selectedContactIds.length - 9 }}
+                                </div>
+                                }
                             </div>
                             }
                         </div>
-                        }
                     </div>
                 </div>
 
@@ -191,11 +198,10 @@
                     </div>
 
                     @if (subtasks.length > 0) {
-                    <div class="subtasks-list">
+                    <div class="subtasks-list" #subtasksList>
                         @for (subtask of subtasks; track subtask.id) {
-                        <div class="subtask-item" 
-                        [class.editing]="editingSubtaskId === subtask.id"
-                        (dblclick)="startEditSubtask(subtask.id)">
+                        <div class="subtask-item" [class.editing]="editingSubtaskId === subtask.id"
+                            (dblclick)="startEditSubtask(subtask.id)">
                             @if (editingSubtaskId === subtask.id) {
                             <div class="subtask-edit-wrapper">
                                 <input type="text" #editInput [value]="subtask.title"

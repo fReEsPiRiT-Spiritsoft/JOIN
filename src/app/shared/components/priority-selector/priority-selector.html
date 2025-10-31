@@ -1,43 +1,18 @@
 <div class="form-group priority-group">
   <label class="priority-label">Priority</label>
   <div class="priority-buttons">
-    <button type="button" class="priority-btn" [class.active]="priority === 'urgent'"
-      (click)="setPriority('urgent')">
+    <button type="button" class="priority-btn" [class.active]="priority === 'urgent'" (click)="setPriority('urgent')">
       Urgent
-      <svg width="20" height="15" viewBox="0 0 20 15" fill="none">
-        <path
-          d="M19.2597 14.2071H0.739155C0.415248 14.2071 0.118893 14.0127 0.00284532 13.7093C-0.113204 13.4059 -0.00562289 13.0673 0.230853 12.8656L9.49104 5.38114L9.4911 5.38117L9.49106 5.38114L18.7512 12.8656C18.9877 13.0673 19.0953 13.4059 18.9792 13.7093C18.8632 14.0127 18.5668 14.2071 18.2429 14.2071H19.2597Z"
-          [attr.fill]="priority === 'urgent' ? '#fff' : '#FF3D00'" />
-        <path
-          d="M19.2597 7.65568H0.739155C0.415248 7.65568 0.118893 7.46126 0.00284532 7.15784C-0.113204 6.85442 -0.00562289 6.51586 0.230853 6.31419L9.49104 -1.17026L9.4911 -1.17023L9.49106 -1.17026L18.7512 6.31419C18.9877 6.51586 19.0953 6.85442 18.9792 7.15784C18.8632 7.46126 18.5668 7.65568 18.2429 7.65568H19.2597Z"
-          [attr.fill]="priority === 'urgent' ? '#fff' : '#FF3D00'" />
-      </svg>
+      <img src="assets/board/urgent.png" alt="Urgent" class="priority-img" />
     </button>
-
     <button type="button" class="priority-btn medium" [class.active]="priority === 'medium'"
       (click)="setPriority('medium')">
       Medium
-      <svg width="20" height="8" viewBox="0 0 20 8" fill="none">
-        <path
-          d="M19.2597 7.65568H0.739155C0.41731 7.65568 0.143127 7.38143 0.143127 7.05954C0.143127 6.73765 0.41731 6.46339 0.739155 6.46339H19.2597C19.5815 6.46339 19.8557 6.73765 19.8557 7.05954C19.8557 7.38143 19.5815 7.65568 19.2597 7.65568Z"
-          [attr.fill]="priority === 'medium' ? '#fff' : '#FFA800'" />
-        <path
-          d="M19.2597 1.19217H0.739155C0.41731 1.19217 0.143127 0.917913 0.143127 0.596024C0.143127 0.274135 0.41731 -0.000118256 0.739155 -0.000118256H19.2597C19.5815 -0.000118256 19.8557 0.274135 19.8557 0.596024C19.8557 0.917913 19.5815 1.19217 19.2597 1.19217Z"
-          [attr.fill]="priority === 'medium' ? '#fff' : '#FFA800'" />
-      </svg>
+      <img src="assets/board/medium.png" alt="Medium" class="priority-img" />
     </button>
-
-    <button type="button" class="priority-btn low" [class.active]="priority === 'low'"
-      (click)="setPriority('low')">
+    <button type="button" class="priority-btn low" [class.active]="priority === 'low'" (click)="setPriority('low')">
       Low
-      <svg width="20" height="15" viewBox="0 0 20 15" fill="none">
-        <path
-          d="M0.740154 0.000118256H19.2607C19.5846 0.000118256 19.8809 0.194541 19.997 0.497961C20.1131 0.801381 20.0055 1.13994 19.769 1.34161L10.5088 8.82607L10.5089 8.82604L10.5088 8.82607L1.24863 1.34161C1.01213 1.13994 0.904547 0.801381 1.02059 0.497961C1.13664 0.194541 1.43299 0.000118256 1.7569 0.000118256H0.740154Z"
-          [attr.fill]="priority === 'low' ? '#fff' : '#7AE229'" />
-        <path
-          d="M0.740154 6.55158H19.2607C19.5846 6.55158 19.8809 6.74601 19.997 7.04943C20.1131 7.35285 20.0055 7.69141 19.769 7.89308L10.5088 15.3775L10.5089 15.3775L10.5088 15.3775L1.24863 7.89308C1.01213 7.69141 0.904547 7.35285 1.02059 7.04943C1.13664 6.74601 1.43299 6.55158 1.7569 6.55158H0.740154Z"
-          [attr.fill]="priority === 'low' ? '#fff' : '#7AE229'" />
-      </svg>
+      <img src="assets/board/low.png" alt="Low" class="priority-img" />
     </button>
   </div>
 </div>

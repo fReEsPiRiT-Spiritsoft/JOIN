@@ -1,18 +1,25 @@
-<div class="form-group assigned-group">
-    <label>Assigned to</label>
+@if (showContactDropdown) {
+<div class="dropdown-backdrop" (click)="closeDropdown()"></div>
+}
+
+<div class="form-field" [class.has-selected-contacts]="selectedContactIds.length > 0">
+    <label for="assignedTo">Assigned to</label>
     <div class="dropdown-wrapper">
-        <div class="dropdown-toggle" (click)="toggleContactDropdown()">
-            <span>Select contacts to assign</span>
-            <svg width="14" height="8" viewBox="0 0 14 8" fill="none" [class.rotated]="showContactDropdown">
-                <path d="M1 1L7 7L13 1" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
-            </svg>
+        <div class="dropdown-toggle-input">
+            <input type="text" [(ngModel)]="contactSearchTerm" name="contactSearch" (focus)="onContactInputFocus()"
+                (blur)="onContactInputBlur()" (input)="onContactSearch()" autocomplete="off" />
+            <img #contactArrow
+                [src]="showContactDropdown ? 'assets/board/arrow-drop-up-transparent.png' : 'assets/board/arrow-drop-down-transparent.png'"
+                alt="dropdown arrow" class="dropdown-arrow" (click)="toggleContactDropdown()"
+                (mouseenter)="onArrowHover(contactArrow, showContactDropdown)"
+                (mouseleave)="onArrowLeave(contactArrow, showContactDropdown)" />
         </div>
 
         @if (showContactDropdown) {
         <div class="dropdown-menu contacts-dropdown">
-            @for (contact of contacts; track contact.id) {
+            @for (contact of filteredContacts; track contact.id) {
             <div class="contact-item" [class.selected]="isContactSelected(contact.id!)"
-                (click)="toggleContact(contact.id!)">
+                (click)="toggleContact(contact.id!, $event)">
                 <div class="contact-info">
                     <div class="avatar" [style.background-color]="getAvatarColor(contact)">
                         {{ getInitials(contact) }}
@@ -23,17 +30,30 @@
                     class="contact-checkbox" alt="checkbox">
             </div>
             }
-        </div>
-        }
-
-        @if (selectedContactIds.length > 0) {
-        <div class="selected-contacts">
-            @for (contact of getSelectedContacts(); track contact.id) {
-            <div class="avatar small" [style.background-color]="getAvatarColor(contact)" [title]="contact.firstname">
-                {{ getInitials(contact) }}
+            @if (filteredContacts.length === 0) {
+            <div class="no-results">
+                No contacts found
             </div>
             }
         </div>
         }
+
+        <div class="selected-contacts-container">
+            @if (selectedContactIds.length > 0) {
+            <div class="selected-contacts">
+                @for (contact of getSelectedContacts().slice(0, 9); track contact.id) {
+                <div class="avatar small" [style.background-color]="getAvatarColor(contact)"
+                    [title]="contact.firstname">
+                    {{ getInitials(contact) }}
+                </div>
+                }
+                @if (selectedContactIds.length > 9) {
+                <div class="avatar small more-contacts">
+                    +{{ selectedContactIds.length - 9 }}
+                </div>
+                }
+            </div>
+            }
+        </div>
     </div>
 </div>

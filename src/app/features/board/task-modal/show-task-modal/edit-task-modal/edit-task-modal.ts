@@ -15,25 +15,19 @@ import { Contact } from '../../../../../core/interfaces/db-contact-interface';
 import { ContactService } from '../../../../../core/services/db-contact-service';
 import { BoardTasksService } from '../../../../../core/services/board-tasks-service';
 import { Timestamp } from '@angular/fire/firestore';
-import { EditTaskFormFieldsComponent } from './edit-task-form-fields/edit-task-form-fields';
 import { PrioritySelectorComponent } from '../../../../../shared/components/priority-selector/priority-selector';
-import { ContactAssignmentDropdownComponent } from './contact-assignment-dropdown/contact-assignment-dropdown';
 import { SubtaskManagerComponent } from '../../../../../shared/components/subtask-manager/subtask-manager';
-import { EditTaskModalHeaderComponent } from './edit-task-modal-header/edit-task-modal-header';
-import { EditTaskModalContentComponent } from './edit-task-modal-content/edit-task-modal-content';
-import { EditTaskModalFooterComponent } from './edit-task-modal-footer/edit-task-modal-footer';
+import { EditTaskFormFieldsComponent } from './edit-task-form-fields/edit-task-form-fields';
+import { ContactAssignmentDropdownComponent } from './contact-assignment-dropdown/contact-assignment-dropdown';
 
 @Component({
   selector: 'app-edit-task-modal',
   imports: [
     CommonModule,
-    EditTaskFormFieldsComponent,
     PrioritySelectorComponent,
-    ContactAssignmentDropdownComponent,
     SubtaskManagerComponent,
-    EditTaskModalHeaderComponent,
-    EditTaskModalContentComponent,
-    EditTaskModalFooterComponent,
+    EditTaskFormFieldsComponent,
+    ContactAssignmentDropdownComponent,
   ],
   templateUrl: './edit-task-modal.html',
   styleUrl: './edit-task-modal.scss',
@@ -48,22 +42,21 @@ export class EditTaskModal implements OnInit, OnChanges {
   private contactService = inject(ContactService);
   private taskService = inject(BoardTasksService);
 
-  // Form Data
   title = '';
   description = '';
   dueDate = '';
+  hiddenDateValue = '';
+  minDate = this.getTodayDateString();
   priority: 'urgent' | 'medium' | 'low' = 'medium';
   selectedContactIds: string[] = [];
   subtasks: Subtask[] = [];
 
-  // Data
   contacts: Contact[] = [];
 
-  // Validation
   titleError = false;
   dueDateError = false;
+  dueDateErrorMessage = 'This field is required';
 
-  // Loading State
   isLoadingContacts = false;
   contactsLoaded = false;
 
@@ -102,6 +95,14 @@ export class EditTaskModal implements OnInit, OnChanges {
     }
   }
 
+  getTodayDateString(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
   populateForm() {
     if (!this.task) {
       return;
@@ -113,7 +114,12 @@ export class EditTaskModal implements OnInit, OnChanges {
     this.subtasks = this.task.subtasks ? JSON.parse(JSON.stringify(this.task.subtasks)) : [];
     if (this.task.dueDate) {
       const date = this.task.dueDate.toDate();
-      this.dueDate = date.toISOString().split('T')[0];
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+
+      this.dueDate = `${day}/${month}/${year}`;
+      this.hiddenDateValue = `${year}-${month}-${day}`;
     }
   }
 
@@ -136,9 +142,27 @@ export class EditTaskModal implements OnInit, OnChanges {
 
     if (!this.dueDate) {
       this.dueDateError = true;
+      this.dueDateErrorMessage = 'This field is required';
       isValid = false;
     } else {
-      this.dueDateError = false;
+      const [day, month, year] = this.dueDate.split('/');
+      if (day && month && year) {
+        const selectedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate < today) {
+          this.dueDateError = true;
+          this.dueDateErrorMessage = 'Date cannot be in the past';
+          isValid = false;
+        } else {
+          this.dueDateError = false;
+        }
+      } else {
+        this.dueDateError = true;
+        this.dueDateErrorMessage = 'Invalid date format';
+        isValid = false;
+      }
     }
 
     return isValid;
@@ -153,7 +177,11 @@ export class EditTaskModal implements OnInit, OnChanges {
       console.error('No task or task.id');
       return;
     }
-    const dueDateTimestamp = Timestamp.fromDate(new Date(this.dueDate));
+
+    const [day, month, year] = this.dueDate.split('/');
+    const dueDateTimestamp = Timestamp.fromDate(
+      new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
+    );
     const updates: Partial<Task> = {
       title: this.title.trim(),
       description: this.description.trim(),
@@ -180,11 +208,13 @@ export class EditTaskModal implements OnInit, OnChanges {
     this.title = '';
     this.description = '';
     this.dueDate = '';
+    this.hiddenDateValue = '';
     this.priority = 'medium';
     this.selectedContactIds = [];
     this.subtasks = [];
     this.titleError = false;
     this.dueDateError = false;
+    this.dueDateErrorMessage = 'This field is required';
   }
 
   onClose() {

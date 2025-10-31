@@ -1,33 +1,50 @@
 @if (showModal && task) {
 <div class="modal-overlay" (click)="onOverlayClick()">
   <div class="modal-container" (click)="onModalClick($event)">
-    <!-- Close Button Header -->
-    <app-edit-task-modal-header (closeClick)="onClose()">
-    </app-edit-task-modal-header>
+    <div class="modal-wrapper">
 
-    <!-- Scrollable Content Container -->
-    <app-edit-task-modal-content>
-      <!-- Basic Form Fields -->
-      <app-edit-task-form-fields [(title)]="title" [(description)]="description" [(dueDate)]="dueDate"
-        [(titleError)]="titleError" [(dueDateError)]="dueDateError">
-      </app-edit-task-form-fields>
+      <div class="modal-header">
+        <button class="close-btn" (click)="onClose()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#2A3647" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
 
-      <!-- Priority Selector -->
-      <app-priority-selector [(priority)]="priority">
-      </app-priority-selector>
+      <div class="modal-content">
 
-      <!-- Contact Assignment -->
-      <app-contact-assignment-dropdown [contacts]="contacts" [(selectedContactIds)]="selectedContactIds">
-      </app-contact-assignment-dropdown>
+        <div class="edit-form-left">
+          <app-edit-task-form-fields [(title)]="title" [(description)]="description" [(dueDate)]="dueDate"
+            [(hiddenDateValue)]="hiddenDateValue" [minDate]="minDate" [(titleError)]="titleError"
+            [(dueDateError)]="dueDateError" [(dueDateErrorMessage)]="dueDateErrorMessage">
+          </app-edit-task-form-fields>
+        </div>
 
-      <!-- Subtasks -->
-      <app-subtask-manager [(subtasks)]="subtasks">
-      </app-subtask-manager>
-    </app-edit-task-modal-content>
+        <div class="edit-form-right">
+          <div class="form-field">
+            <app-priority-selector [(priority)]="priority"></app-priority-selector>
+          </div>
 
-    <!-- Submit Button Footer -->
-    <app-edit-task-modal-footer (submitClick)="onSubmit()">
-    </app-edit-task-modal-footer>
+          <app-contact-assignment-dropdown [contacts]="contacts"
+            [(selectedContactIds)]="selectedContactIds"></app-contact-assignment-dropdown>
+
+          <div class="form-field">
+            <app-subtask-manager [(subtasks)]="subtasks"></app-subtask-manager>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-ok" (click)="onSubmit()">
+          Ok
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
   </div>
 </div>
 }

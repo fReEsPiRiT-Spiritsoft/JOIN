@@ -1,57 +1,176 @@
-.frame-218 {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.form-group {
+﻿.form-field {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 100%;
+  max-width: 440px;
+  padding-bottom: 16px;
 
   label {
-    font-size: 20px;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
+    font-size: 20px;
+    line-height: 120%;
     color: #2a3647;
+
+    .required {
+      color: #ff8190;
+      margin-left: 2px;
+    }
   }
 
-  .input-wrapper {
-    position: relative;
+  .input-wrapper,
+  .textarea-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    align-items: flex-start;
+    width: 100%;
+  }
 
-    input,
-    textarea {
-      padding: 13px 21px;
-      border: 1px solid #d1d1d1;
-      border-radius: 10px;
-      font-size: 20px;
-      font-family: inherit;
+  input[type='text'],
+  input[type='date'] {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 21px;
+    gap: 10px;
+    width: 100%;
+    height: 48px;
+    background: #ffffff;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 120%;
+    color: #2a3647;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+      color: #d1d1d1;
+    }
+
+    &:focus {
       outline: none;
+      border-color: #29abe2;
+    }
 
-      &:focus {
-        border-color: #29abe2;
+    &.error {
+      border-color: #ff8190;
+    }
+  }
+
+  .date-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+
+    input[type='text'] {
+      flex: 1;
+      padding-right: 50px;
+      width: 100%;
+    }
+
+    .calendar-icon-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: scale(1.1);
       }
 
-      &.error {
-        border-color: #ff3d00;
+      svg path {
+        transition: fill 0.2s;
       }
 
-      &::placeholder {
-        color: #d1d1d1;
+      &:hover svg path {
+        fill: #29abe2;
       }
     }
 
-    textarea {
-      min-height: 120px;
-      resize: vertical;
+    .hidden-date-picker {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      width: 0;
+      height: 0;
+    }
+  }
+
+  textarea {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 18px 16px;
+    gap: 10px;
+    width: 100%;
+    min-height: 120px;
+    background: #ffffff;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 120%;
+    color: #2a3647;
+    resize: vertical;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+      color: #d1d1d1;
     }
 
-    .field-error {
-      font-size: 14px;
-      color: #ff3d00;
-      margin-top: 4px;
+    &:focus {
+      outline: none;
+      border-color: #29abe2;
+    }
+  }
+
+  .textarea-wrapper {
+    position: relative;
+
+    .resize-icon {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      width: 18.9px;
+      height: 18.9px;
+      pointer-events: none;
+    }
+  }
+
+  .field-error {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 120%;
+    color: #ff8190;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+
+    &.visible,
+    &.show {
+      opacity: 1;
+      visibility: visible;
     }
   }
 }

@@ -16,6 +16,24 @@ export class SubtaskManagerComponent {
 
   newSubtaskTitle = '';
   editingSubtaskId: string | null = null;
+  subtaskInputFocused = false;
+
+  onSubtaskInputFocus() {
+    this.subtaskInputFocused = true;
+  }
+
+  onSubtaskInputBlur() {
+    setTimeout(() => {
+      if (!this.newSubtaskTitle) {
+        this.subtaskInputFocused = false;
+      }
+    }, 200);
+  }
+
+  clearSubtaskInput() {
+    this.newSubtaskTitle = '';
+    this.subtaskInputFocused = false;
+  }
 
   addSubtask() {
     if (this.newSubtaskTitle.trim()) {
@@ -51,7 +69,19 @@ export class SubtaskManagerComponent {
     this.subtasksChange.emit(updatedSubtasks);
   }
 
-  clearInput() {
-    this.newSubtaskTitle = '';
+  onSubtaskCloseHover(imgElement: HTMLImageElement) {
+    imgElement.src = 'assets/board/close-hover-board.png';
+  }
+
+  onSubtaskCloseLeave(imgElement: HTMLImageElement) {
+    imgElement.src = 'assets/board/close-default-board.png';
+  }
+
+  onSubtaskCheckHover(imgElement: HTMLImageElement) {
+    imgElement.src = 'assets/board/check-dark-hover.png';
+  }
+
+  onSubtaskCheckLeave(imgElement: HTMLImageElement) {
+    imgElement.src = 'assets/board/check-dark-default.png';
   }
 }

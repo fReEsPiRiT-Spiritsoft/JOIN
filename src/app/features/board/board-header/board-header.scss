@@ -57,7 +57,9 @@
 @media (max-width: 1024px) {
   .board-header {
     padding: 30px 32px 0;
-    gap: 24px;
+    gap: 0px;
+    flex-direction: column;
+    align-items: flex-start;
 
     h2 {
       font-size: 48px;
@@ -66,6 +68,9 @@
 
     .mobile-add-task-btn {
       display: flex;
+      position: relative;
+      top: 40%;
+      right: 40%;
     }
 
     .board-header-actions {
@@ -75,57 +80,60 @@
       .desktop-add-button,
       app-board-add-button {
         display: none !important;
+
       }
     }
   }
 }
 
 @media (max-width: 768px) {
-  .board-header {
-    padding: 20px 24px 0;
-    gap: 16px;
-    margin-bottom: 24px;
-    height: auto;
-    flex-wrap: wrap;
-    align-items: flex-start;
 
-    h2 {
-      font-size: 36px;
-      flex: 0 0 auto;
-    }
+  .mobile-add-task-btn {
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+    margin-right: 0;
+    align-self: center;
+    display: flex;
+    position: relative;
+    left: -117px;
 
-    .mobile-add-task-btn {
-      width: 44px;
-      height: 44px;
-      margin-left: auto;
-      margin-right: 0;
-      align-self: center;
-    }
-
-    .board-header-actions {
-      width: 100%;
-      flex-basis: 100%;
-      order: 2;
-      margin-top: 16px;
-
-      app-board-search {
-        width: 100%;
-      }
-
-      app-board-add-button {
-        display: none !important;
-      }
-    }
   }
 }
 
+@media (max-width: 580px) {
+
+  .mobile-add-task-btn {
+    left: -62px;
+
+  }
+}
+
+@media (max-width: 523px) {
+
+  .mobile-add-task-btn {
+    left: -12px;
+
+  }
+}
+@media (max-width: 404px) {
+
+  .mobile-add-task-btn {
+    top: 9px !important;
+
+  }
+}
+
+
+
+
 @media (max-width: 480px) {
   .board-header {
-    padding: 0 16px;
-    gap: 16px;
+    // padding: 0 16px;
+    gap: 0px;
 
     h2 {
-      font-size: 28px;
+      // font-size: 28px;
     }
   }
 }

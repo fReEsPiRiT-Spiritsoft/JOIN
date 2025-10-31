@@ -18,8 +18,8 @@
   max-width: 525px;
   width: 525px;
   max-height: 90vh;
-
-  padding: 48px 40px;
+ padding: 48px 15px 48px 40px;
+ 
   position: relative;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
   display: flex;
@@ -383,11 +383,11 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #29abe2;
+      background: rgb(168, 168, 168);
       border-radius: 10px;
 
       &:hover {
-        background: #1c8bb8;
+        background: rgb(168, 168, 168);
       }
     }
   }
@@ -398,6 +398,7 @@
   justify-content: center;
   align-items: center;
   padding: 0px;
+  padding-right: 30px;
   gap: 8px;
 
   .divider {

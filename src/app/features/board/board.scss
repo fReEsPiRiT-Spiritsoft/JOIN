@@ -41,7 +41,7 @@
 
 @media (max-width: 1385px) {
   .board-container {
-    padding: 12px;
+    padding: 12px 0px 12px 12px;
     // overflow-x: visible;
   }
 
@@ -98,10 +98,54 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .board-container {
+    padding: 12px 0px 12px 12px;
+  }
+
+  .board-columns-wrapper {
+    flex-direction: column; 
+    padding: 0 16px;
+    gap: 24px;
+
+    app-board-columns {
+      width: 100%;
+
+      ::ng-deep .tasks-container {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 16px;
+        padding-bottom: 12px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        
+        // ✅ Scrollbar verstecken aber funktional
+        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none; // IE/Edge
+        
+        &::-webkit-scrollbar {
+          display: none; // Chrome, Safari, Opera
+        }
+
+        > div {
+          flex: 0 0 280px;
+          scroll-snap-align: start;
+        }
+        
+        .empty-state {
+          flex: 0 0 100%;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
 
 @media (max-width: 480px) {
   .board-container {
-    padding: 8px;
+    padding: 12px 0px 12px 12px;
   }
 
   

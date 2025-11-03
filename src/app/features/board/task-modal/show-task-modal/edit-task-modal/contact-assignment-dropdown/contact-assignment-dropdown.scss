@@ -100,7 +100,7 @@
 
       &.contacts-dropdown {
         .contact-item {
-          padding: 7px 16px;
+          padding: clamp(5px, 1.5vw, 7px) clamp(12px, 2vw, 16px);
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -127,16 +127,16 @@
           .contact-info {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: clamp(12px, 2vw, 16px);
 
             .avatar {
-              width: 42px;
-              height: 42px;
+              width: clamp(36px, 7vw, 42px);
+              height: clamp(36px, 7vw, 42px);
               border-radius: 50%;
               display: flex;
               align-items: center;
               justify-content: center;
-              font-size: 12px;
+              font-size: clamp(10px, 2vw, 12px);
               color: #ffffff;
               font-weight: 400;
               border: 2px solid #ffffff;
@@ -150,8 +150,8 @@
           }
 
           .contact-checkbox {
-            width: 24px;
-            height: 24px;
+            width: clamp(20px, 4vw, 24px);
+            height: clamp(20px, 4vw, 24px);
             cursor: pointer;
             flex-shrink: 0;
             transition: transform 0.2s ease;
@@ -172,29 +172,29 @@
       transition: max-height 0.3s ease-out, margin-top 0.3s ease-out;
 
       &:has(.selected-contacts) {
-        max-height: 50px;
-        margin-top: 8px;
+        max-height: clamp(40px, 8vw, 50px);
+        margin-top: clamp(6px, 1.5vw, 8px);
       }
     }
 
     .selected-contacts {
       display: flex;
       align-items: center;
-      height: 42px;
+      height: clamp(36px, 7vw, 42px);
 
       .avatar.small {
-        width: 42px;
-        height: 42px;
+        width: clamp(36px, 7vw, 42px);
+        height: clamp(36px, 7vw, 42px);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 14px;
+        font-size: clamp(12px, 2.5vw, 14px);
         color: #ffffff;
         font-weight: 400;
         border: 2px solid #ffffff;
         flex-shrink: 0;
-        margin-left: -8px;
+        margin-left: clamp(-6px, -1.5vw, -8px);
 
         &:first-child {
           margin-left: 0;
@@ -202,7 +202,7 @@
 
         &.more-contacts {
           background-color: #2a3647;
-          font-size: 12px;
+          font-size: clamp(10px, 2vw, 12px);
         }
       }
     }

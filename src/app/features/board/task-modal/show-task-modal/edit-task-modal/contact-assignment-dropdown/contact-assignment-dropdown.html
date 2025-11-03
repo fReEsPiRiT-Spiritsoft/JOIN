@@ -41,15 +41,15 @@
         <div class="selected-contacts-container">
             @if (selectedContactIds.length > 0) {
             <div class="selected-contacts">
-                @for (contact of getSelectedContacts().slice(0, 9); track contact.id) {
+                @for (contact of getSelectedContacts().slice(0, 4); track contact.id) {
                 <div class="avatar small" [style.background-color]="getAvatarColor(contact)"
                     [title]="contact.firstname">
                     {{ getInitials(contact) }}
                 </div>
                 }
-                @if (selectedContactIds.length > 9) {
+                @if (selectedContactIds.length > 4) {
                 <div class="avatar small more-contacts">
-                    +{{ selectedContactIds.length - 9 }}
+                    +{{ selectedContactIds.length - 4 }}
                 </div>
                 }
             </div>

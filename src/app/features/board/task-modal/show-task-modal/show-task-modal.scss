@@ -16,16 +16,17 @@
   background: #ffffff;
   border-radius: 30px;
   max-width: 525px;
-  width: 525px;
+  width: 100%;
   max-height: 90vh;
- padding: 48px 15px 48px 40px;
- 
+  padding: clamp(32px, 6vw, 48px) clamp(10px, 2vw, 15px) clamp(32px, 6vw, 48px)
+    clamp(24px, 5vw, 40px);
+
   position: relative;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 24px;
+  gap: clamp(16px, 3vw, 24px);
 }
 
 .modal-header {
@@ -34,8 +35,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 0px;
-  padding-right: 23px;
-  gap: 10px;
+  padding-right: clamp(15px, 3vw, 23px);
+  gap: clamp(6px, 1.5vw, 10px);
   width: 100%;
   align-self: stretch;
 }
@@ -46,8 +47,8 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  width: 32px;
-  height: 32px;
+  width: clamp(28px, 5vw, 32px);
+  height: clamp(28px, 5vw, 32px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,6 +57,11 @@
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  svg {
+    width: clamp(20px, 4vw, 24px);
+    height: clamp(20px, 4vw, 24px);
   }
 
   svg path {
@@ -95,7 +101,7 @@
   width: 100%;
   font-family: 'Inter', sans-serif;
   font-style: normal;
-  font-size: 61px;
+  font-size: clamp(32px, 8vw, 61px);
   font-weight: 700;
   color: #000000;
   margin: 0;
@@ -108,10 +114,10 @@
   width: 100%;
   font-family: 'Inter', sans-serif;
   font-style: normal;
-  font-size: 20px;
+  font-size: clamp(14px, 3vw, 20px);
   font-weight: 400;
   color: #000000;
-  margin-bottom: 18px;
+  margin-bottom: clamp(12px, 2vw, 18px);
   line-height: 120%;
   align-self: stretch;
 }
@@ -121,7 +127,7 @@
   flex-direction: row;
   align-items: center;
   padding: 0px;
-  gap: 25px;
+  gap: clamp(12px, 3vw, 25px);
   width: 100%;
   align-self: stretch;
 
@@ -129,7 +135,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 20px;
+    font-size: clamp(14px, 3vw, 20px);
     line-height: 120%;
     color: #2a3647;
   }
@@ -138,7 +144,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: clamp(14px, 3vw, 20px);
     line-height: 120%;
     color: #000000;
   }
@@ -148,13 +154,13 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 4px 18px;
-    gap: 10px;
+    padding: clamp(3px, 1vw, 4px) clamp(12px, 2vw, 18px);
+    gap: clamp(6px, 1.5vw, 10px);
     border-radius: 10px;
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: clamp(14px, 3vw, 20px);
     line-height: 120%;
     color: #000000;
 
@@ -163,8 +169,8 @@
       align-items: center;
 
       ::ng-deep .priority-icon__img {
-        width: 28px;
-        height: 28px;
+        width: clamp(20px, 4vw, 28px);
+        height: clamp(20px, 4vw, 28px);
       }
     }
   }
@@ -175,7 +181,7 @@
   flex-direction: column;
   align-items: flex-end;
   padding: 0px;
-  gap: 8px;
+  gap: clamp(6px, 1.5vw, 8px);
   width: 100%;
   align-self: stretch;
 
@@ -183,7 +189,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 20px;
+    font-size: clamp(14px, 3vw, 20px);
     line-height: 120%;
     color: #2a3647;
     width: 100%;
@@ -226,15 +232,15 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 7px 16px;
-    gap: 16px;
+    padding: clamp(5px, 1.5vw, 7px) clamp(12px, 2vw, 16px);
+    gap: clamp(12px, 2vw, 16px);
     width: 100%;
     border-radius: 10px;
     align-self: stretch;
 
     .avatar {
-      width: 42px;
-      height: 42px;
+      width: clamp(36px, 7vw, 42px);
+      height: clamp(36px, 7vw, 42px);
       border-radius: 45px;
       border: 2px solid #ffffff;
       display: flex;
@@ -243,7 +249,7 @@
       font-family: 'Inter', sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 12px;
+      font-size: clamp(10px, 2vw, 12px);
       line-height: 120%;
       text-align: center;
       color: #ffffff;
@@ -254,7 +260,7 @@
       font-family: 'Open Sans', sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 19px;
+      font-size: clamp(14px, 3vw, 19px);
       line-height: 120%;
       display: flex;
       align-items: center;
@@ -268,20 +274,20 @@
   flex-direction: column;
   align-items: flex-end;
   padding: 0px;
-  gap: 8px;
+  gap: clamp(6px, 1.5vw, 8px);
   width: 100%;
-  max-height: 100px;
+  max-height: clamp(80px, 15vw, 100px);
   align-self: stretch;
 
   .label {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: clamp(14px, 3vw, 20px);
     line-height: 120%;
     color: #2a3647;
     width: 100%;
-    height: 24px;
+    height: clamp(20px, 4vw, 24px);
     align-self: stretch;
   }
 
@@ -317,15 +323,13 @@
     }
   }
 
-  
-
   .subtask-item {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 6px 16px;
-    gap: 16px;
-    height: 32px;
+    padding: clamp(4px, 1vw, 6px) clamp(12px, 2vw, 16px);
+    gap: clamp(12px, 2vw, 16px);
+    height: clamp(28px, 5vw, 32px);
     cursor: pointer;
     transition: background-color 0.2s;
     user-select: none;
@@ -335,8 +339,8 @@
     }
 
     .checkbox {
-      width: 24px;
-      height: 24px;
+      width: clamp(20px, 4vw, 24px);
+      height: clamp(20px, 4vw, 24px);
       border-radius: 3px;
       flex-shrink: 0;
       cursor: pointer;
@@ -349,9 +353,9 @@
       font-family: 'Inter', sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 16px;
+      font-size: clamp(13px, 2.5vw, 16px);
       line-height: 120%;
-      height: 19px;
+      height: auto;
       color: #000000;
       transition: text-decoration 0.2s;
 
@@ -363,35 +367,34 @@
   }
 }
 
-
 .task-content-scrollable {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: calc(90vh - 200px); 
-    padding-right: 8px; 
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(90vh - 200px);
+  padding-right: 8px;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
 
-    &::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 10px;
-      margin: 4px 0;
-    }
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+    margin: 4px 0;
+  }
 
-    &::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
+    background: rgb(168, 168, 168);
+    border-radius: 10px;
+
+    &:hover {
       background: rgb(168, 168, 168);
-      border-radius: 10px;
-
-      &:hover {
-        background: rgb(168, 168, 168);
-      }
     }
   }
+}
 
 .modal-actions {
   display: flex;
@@ -399,12 +402,12 @@
   justify-content: center;
   align-items: center;
   padding: 0px;
-  padding-right: 30px;
-  gap: 8px;
+  padding-right: clamp(20px, 4vw, 30px);
+  gap: clamp(6px, 1.5vw, 8px);
 
   .divider {
     width: 0px;
-    height: 24px;
+    height: clamp(20px, 4vw, 24px);
     border: 1px solid #d1d1d1;
   }
 
@@ -414,13 +417,13 @@
     justify-content: center;
     align-items: center;
     padding: 0px;
-    gap: 8px;
+    gap: clamp(6px, 1.5vw, 8px);
     background: none;
     border: none;
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: clamp(13px, 2.5vw, 16px);
     line-height: 120%;
     color: #2a3647;
     cursor: pointer;
@@ -435,40 +438,9 @@
     }
 
     svg {
-      width: 24px;
-      height: 24px;
+      width: clamp(20px, 4vw, 24px);
+      height: clamp(20px, 4vw, 24px);
       transition: all 0.2s;
     }
-  }
-}
-
-// Responsive
-@media (max-width: 768px) {
-  .modal-container {
-    padding: 32px 24px;
-    max-width: 95vw;
-  }
-
-  .task-title {
-    font-size: 40px;
-  }
-
-  .task-description {
-    font-size: 18px;
-  }
-
-  .info-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-
-    .label {
-      min-width: auto;
-    }
-  }
-
-  .close-btn {
-    top: 0px;
-    right: 0px;
   }
 }

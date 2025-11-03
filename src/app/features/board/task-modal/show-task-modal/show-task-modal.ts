@@ -202,4 +202,12 @@ export class ShowTaskModal implements OnInit, OnChanges {
     }
     event.stopPropagation();
   }
+
+  onCloseHover(imgElement: HTMLImageElement) {
+    imgElement.src = 'assets/board/close-hover-board.png';
+  }
+
+  onCloseLeave(imgElement: HTMLImageElement) {
+    imgElement.src = 'assets/board/close-default-board.png';
+  }
 }

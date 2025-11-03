@@ -14,18 +14,17 @@
 
 .modal-container {
   background: #ffffff;
-  border-radius: 30px;
+  border-radius: clamp(20px, 3vw, 30px);
   max-width: 525px;
   width: 525px;
   max-height: 90vh;
- padding: 48px 15px 48px 40px;
- 
+  padding: clamp(40px, 5vw, 48px) clamp(30px, 3vw, 40px);
   position: relative;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 24px;
+  gap: clamp(20px, 3vw, 24px);
 }
 
 .modal-header {
@@ -33,37 +32,31 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0px;
-  padding-right: 23px;
+  padding: 0;
   gap: 10px;
   width: 100%;
   align-self: stretch;
 }
 
 .close-btn {
-  position: relative;
+  position: absolute;
+  top: clamp(40px, 5vw, 48px);
+  right: clamp(30px, 3vw, 40px);
+  width: clamp(24px, 3vw, 32px);
+  height: clamp(24px, 3vw, 32px);
   background: none;
   border: none;
+  border-radius: 56px;
   cursor: pointer;
-  padding: 0;
-  width: 32px;
-  height: 32px;
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 56px;
-  transition: transform 0.2s;
 
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  svg path {
-    transition: stroke 0.2s;
-  }
-
-  &:hover svg path {
-    stroke: #29abe2;
+  img {
+    width: clamp(24px, 3vw, 32px);
+    height: clamp(24px, 3vw, 32px);
+    object-fit: contain;
   }
 }
 
@@ -71,13 +64,13 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 4px 24px;
+  padding: clamp(4px, 0.5vw, 6px) clamp(20px, 2.5vw, 24px);
   gap: 10px;
-  border-radius: 8px;
+  border-radius: clamp(6px, 1vw, 8px);
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 23px;
+  font-size: clamp(20px, 2.5vw, 23px);
   line-height: 120%;
   width: fit-content;
   color: #ffffff;
@@ -95,7 +88,7 @@
   width: 100%;
   font-family: 'Inter', sans-serif;
   font-style: normal;
-  font-size: 61px;
+  font-size: clamp(36px, 8vw, 61px);
   font-weight: 700;
   color: #000000;
   margin: 0;
@@ -108,10 +101,10 @@
   width: 100%;
   font-family: 'Inter', sans-serif;
   font-style: normal;
-  font-size: 20px;
+  font-size: clamp(18px, 1vw, 20px);
   font-weight: 400;
   color: #000000;
-  margin-bottom: 18px;
+  margin-bottom: clamp(16px, 2vw, 18px);
   line-height: 120%;
   align-self: stretch;
 }
@@ -120,8 +113,8 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px;
-  gap: 25px;
+  padding: 0;
+  gap: clamp(20px, 2.5vw, 25px);
   width: 100%;
   align-self: stretch;
 
@@ -129,7 +122,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 20px;
+    font-size: clamp(18px, 1vw, 20px);
     line-height: 120%;
     color: #2a3647;
   }
@@ -138,7 +131,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: clamp(18px, 1vw, 20px);
     line-height: 120%;
     color: #000000;
   }
@@ -148,13 +141,13 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 4px 18px;
+    padding: clamp(4px, 0.5vw, 6px) clamp(16px, 2vw, 18px);
     gap: 10px;
-    border-radius: 10px;
+    border-radius: clamp(8px, 1vw, 10px);
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: clamp(18px, 1vw, 20px);
     line-height: 120%;
     color: #000000;
 
@@ -163,8 +156,8 @@
       align-items: center;
 
       ::ng-deep .priority-icon__img {
-        width: 28px;
-        height: 28px;
+        width: clamp(24px, 2.5vw, 28px);
+        height: clamp(24px, 2.5vw, 28px);
       }
     }
   }
@@ -174,8 +167,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding: 0px;
-  gap: 8px;
+  padding: 0;
+  gap: clamp(8px, 1vw, 10px);
   width: 100%;
   align-self: stretch;
 
@@ -183,7 +176,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 20px;
+    font-size: clamp(18px, 1vw, 20px);
     line-height: 120%;
     color: #2a3647;
     width: 100%;
@@ -194,8 +187,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    padding: 0px;
-    // gap: 4px;
+    padding: 0;
     width: 100%;
     align-self: stretch;
     // max-height: 176px; // 3 Kontakte * (56px height + 4px gap) - 4px letzte gap
@@ -226,15 +218,15 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 7px 16px;
-    gap: 16px;
+    padding: clamp(6px, 0.8vw, 8px) clamp(12px, 1.5vw, 16px);
+    gap: clamp(12px, 1.5vw, 16px);
     width: 100%;
-    border-radius: 10px;
+    border-radius: clamp(8px, 1vw, 10px);
     align-self: stretch;
 
     .avatar {
-      width: 42px;
-      height: 42px;
+      width: clamp(38px, 4vw, 42px);
+      height: clamp(38px, 4vw, 42px);
       border-radius: 45px;
       border: 2px solid #ffffff;
       display: flex;
@@ -243,7 +235,7 @@
       font-family: 'Inter', sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 12px;
+      font-size: clamp(11px, 1.2vw, 12px);
       line-height: 120%;
       text-align: center;
       color: #ffffff;
@@ -254,7 +246,7 @@
       font-family: 'Open Sans', sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 19px;
+      font-size: clamp(17px, 1.8vw, 19px);
       line-height: 120%;
       display: flex;
       align-items: center;
@@ -267,8 +259,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  padding: 0px;
-  gap: 8px;
+  padding: 0;
+  gap: clamp(8px, 1vw, 10px);
   width: 100%;
   max-height: 100px;
   align-self: stretch;
@@ -277,7 +269,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: clamp(18px, 1vw, 20px);
     line-height: 120%;
     color: #2a3647;
     width: 100%;
@@ -289,12 +281,10 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0px;
+    padding: 0;
     gap: 4px;
     width: 100%;
     height: 68px;
-    // max-height: 68px;
-    // overflow-y: auto;
     align-self: stretch;
 
     // Scrollbar Styling
@@ -317,15 +307,13 @@
     }
   }
 
-  
-
   .subtask-item {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 6px 16px;
-    gap: 16px;
-    height: 32px;
+    padding: clamp(6px, 0.8vw, 8px) clamp(12px, 1.5vw, 16px);
+    gap: clamp(12px, 1.5vw, 16px);
+    height: clamp(30px, 3.5vw, 32px);
     cursor: pointer;
     transition: background-color 0.2s;
     user-select: none;
@@ -335,8 +323,8 @@
     }
 
     .checkbox {
-      width: 24px;
-      height: 24px;
+      width: clamp(22px, 2.5vw, 24px);
+      height: clamp(22px, 2.5vw, 24px);
       border-radius: 3px;
       flex-shrink: 0;
       cursor: pointer;
@@ -349,9 +337,9 @@
       font-family: 'Inter', sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 16px;
+      font-size: clamp(15px, 1.6vw, 16px);
       line-height: 120%;
-      height: 19px;
+      height: auto;
       color: #000000;
       transition: text-decoration 0.2s;
 
@@ -363,48 +351,46 @@
   }
 }
 
-
 .task-content-scrollable {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: calc(90vh - 200px); 
-    padding-right: 8px; 
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 24px);
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(90vh - 200px);
+  padding-right: clamp(6px, 1vw, 8px);
+  &::-webkit-scrollbar {
+    width: clamp(6px, 1vw, 8px);
+  }
 
-    &::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 10px;
-      margin: 4px 0;
-    }
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+    margin: 4px 0;
+  }
 
-    &::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
+    background: rgb(168, 168, 168);
+    border-radius: 10px;
+
+    &:hover {
       background: rgb(168, 168, 168);
-      border-radius: 10px;
-
-      &:hover {
-        background: rgb(168, 168, 168);
-      }
     }
   }
+}
 
 .modal-actions {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0px;
-  padding-right: 30px;
-  gap: 8px;
+  padding: 0;
+  gap: clamp(8px, 1vw, 10px);
 
   .divider {
-    width: 0px;
-    height: 24px;
+    width: 0;
+    height: clamp(22px, 2.5vw, 24px);
     border: 1px solid #d1d1d1;
   }
 
@@ -413,14 +399,14 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 0px;
-    gap: 8px;
+    padding: clamp(6px, 1vw, 8px);
+    gap: clamp(6px, 0.8vw, 8px);
     background: none;
     border: none;
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: clamp(15px, 1.6vw, 16px);
     line-height: 120%;
     color: #2a3647;
     cursor: pointer;
@@ -435,44 +421,9 @@
     }
 
     svg {
-      width: 24px;
-      height: 24px;
+      width: clamp(22px, 2.5vw, 24px);
+      height: clamp(22px, 2.5vw, 24px);
       transition: all 0.2s;
     }
-  }
-}
-
-// Responsive
-@media (max-width: 768px) {
-  .modal-container {
-    padding: 32px 24px;
-    max-width: 95vw;
-  }
-
-  .task-title {
-    font-size: 40px;
-  }
-
-  .task-description {
-    font-size: 18px;
-  }
-
-  .info-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-
-    .label {
-      min-width: auto;
-    }
-  }
-
-  .close-btn {
-    top: 16px;
-    right: 16px;
-  }
-
-  .category-badge {
-    padding: 2px;
   }
 }

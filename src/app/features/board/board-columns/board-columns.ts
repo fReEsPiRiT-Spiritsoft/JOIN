@@ -6,6 +6,7 @@ import { TaskCard } from '../task-card/task-card';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { BoardTasksService } from '../../../core/services/board-tasks-service';
 import { Firestore, writeBatch, doc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-board-columns',
@@ -27,14 +28,16 @@ export class BoardColumns implements OnInit {
 
   private taskService = inject(BoardTasksService);
   private firestore = inject(Firestore);
+  private router = inject(Router); 
 
   isHovering = false;
-  isMobile = false; // ✅ Zurück zu isMobile
+  isMobile = false; 
+  isTabletOrBelow = false;
   showMoveMenu: { [key: string]: boolean } = {};
 
   @HostListener('window:resize')
   checkScreenSize() {
-    this.isMobile = window.innerWidth <= 1024; // ✅ Mobile = <= 1024px
+    this.isMobile = window.innerWidth <= 1024; 
   }
 
   ngOnInit() {
@@ -46,7 +49,11 @@ export class BoardColumns implements OnInit {
   }
 
   onAddTaskClick() {
-    this.addTaskClicked.emit(this.columnId);
+    if (this.isMobile) {
+      this.router.navigate(['/add-task']);
+    } else {
+      this.addTaskClicked.emit(this.columnId);
+    }
   }
 
   onTaskClick(task: Task) {

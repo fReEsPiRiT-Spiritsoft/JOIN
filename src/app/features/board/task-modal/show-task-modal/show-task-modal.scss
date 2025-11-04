@@ -42,8 +42,8 @@
   position: absolute;
   top: clamp(40px, 5vw, 48px);
   right: clamp(30px, 3vw, 40px);
-  width: clamp(22px, 2.8vw, 28px);  
-  height: clamp(22px, 2.8vw, 28px); 
+  width: clamp(22px, 2.8vw, 28px);
+  height: clamp(22px, 2.8vw, 28px);
   background: none;
   border: none;
   border-radius: 56px;
@@ -54,7 +54,7 @@
   justify-content: center;
 
   img {
-    width: clamp(18px, 2.3vw, 24px); 
+    width: clamp(18px, 2.3vw, 24px);
     height: clamp(18px, 2.3vw, 24px);
     object-fit: contain;
   }
@@ -317,6 +317,7 @@
     cursor: pointer;
     transition: background-color 0.2s;
     user-select: none;
+    border-radius: clamp(6px, 0.8vw, 8px);
 
     &:hover {
       background-color: #f4f4f4;

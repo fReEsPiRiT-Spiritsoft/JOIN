@@ -219,7 +219,6 @@ export class Board implements OnInit, OnDestroy {
       status: targetColumn as 'todo' | 'inprogress' | 'awaitfeedback' | 'done' 
     };
     await this.taskService.updateTask(task.id, updatedTask);
-    console.log(`Task "${task.title}" moved to ${targetColumn}`);
     
   } catch (error) {
     console.error('Error moving task:', error);

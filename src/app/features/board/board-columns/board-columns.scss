@@ -12,7 +12,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 16px;
 
   h2 {
     font-size: 18px;
@@ -46,6 +45,12 @@
   }
 }
 
+@media (max-width: 1385px) {
+  .column-header {
+    padding-right: 16px;
+  }
+}
+
 .tasks-container {
   display: flex;
   flex-direction: column;
@@ -58,31 +63,6 @@
     }
   }
 }
-// .cdk-drag-preview {
-//   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-//   opacity: 0.9;
-//   border-radius: 30px;
-
-//   app-task-card {
-//     .task-card {
-//       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-//     }
-//   }
-// }
-
-// .cdk-drag-placeholder {
-//   opacity: 0.4;
-//   border: 2px dashed #29abe2;
-//   background: transparent;
-
-//   * {
-//     opacity: 0;
-//   }
-// }
-
-// .cdk-drag-animating {
-//   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-// }
 
 .empty-state {
   display: flex;

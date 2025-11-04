@@ -229,4 +229,12 @@ export class EditTaskModal implements OnInit, OnChanges {
   onModalClick(event: MouseEvent) {
     event.stopPropagation();
   }
+
+  onCloseHover(imgElement: HTMLImageElement) {
+    imgElement.src = 'assets/board/close-hover-board.png';
+  }
+
+  onCloseLeave(imgElement: HTMLImageElement) {
+    imgElement.src = 'assets/board/close-default-board.png';
+  }
 }

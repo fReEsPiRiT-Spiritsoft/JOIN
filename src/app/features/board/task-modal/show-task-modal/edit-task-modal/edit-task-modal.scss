@@ -38,29 +38,21 @@
   padding-right: clamp(12px, 4vw, 25px);
 
   .close-btn {
-    width: clamp(30px, 6vw, 32px);
-    height: clamp(30px, 6vw, 32px);
+    width: clamp(22px, 2.8vw, 28px);
+    height: clamp(22px, 2.8vw, 28px);
     background: none;
     border: none;
-    border-radius: 50%;
+    border-radius: 56px;
     cursor: pointer;
-    padding: 0;
+    padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s;
 
-    svg {
-      width: clamp(22px, 5vw, 24px);
-      height: clamp(22px, 5vw, 24px);
-    }
-
-    &:hover {
-      transform: scale(1.1);
-
-      svg path {
-        stroke: #29abe2;
-      }
+    img {
+      width: clamp(18px, 2.3vw, 24px);
+      height: clamp(18px, 2.3vw, 24px);
+      object-fit: contain;
     }
   }
 }

@@ -229,6 +229,7 @@ export class AddTask implements OnInit {
     if (dateValue) {
       const [year, month, day] = dateValue.split('-');
       this.dueDate = `${day}/${month}/${year}`;
+      this.dueDateError = false;
     }
   }
 

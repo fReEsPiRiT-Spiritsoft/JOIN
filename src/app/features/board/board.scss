@@ -2,6 +2,14 @@
   height: 100%;
   // max-width: 1688px;
   overflow-x: auto;
+
+  // Scrollleiste komplett unsichtbar machen
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE und Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 }
 
 .board-columns-wrapper {
@@ -38,7 +46,6 @@
 //   }
 // }
 
-
 @media (max-width: 1385px) {
   .board-container {
     padding: 12px 0px 12px 12px;
@@ -46,13 +53,12 @@
   }
 
   .board-columns-wrapper {
-    flex-direction: column; 
-    padding: 0 16px;
+    flex-direction: column;
+    padding: 0 0 0 16px;
     gap: 24px;
 
     app-board-columns {
       width: 100%;
-      
 
       ::ng-deep .tasks-container {
         display: flex;
@@ -63,32 +69,30 @@
         padding-bottom: 12px;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
-        
 
         &::-webkit-scrollbar {
           height: 8px;
         }
-        
+
         &::-webkit-scrollbar-track {
           background: #f1f1f1;
           border-radius: 4px;
         }
-        
+
         &::-webkit-scrollbar-thumb {
           background: #29abe2;
           border-radius: 4px;
-          
+
           &:hover {
             background: #1c8bb8;
           }
         }
-        
 
         > div {
           flex: 0 0 280px;
           scroll-snap-align: start;
         }
-        
+
         .empty-state {
           flex: 0 0 100%;
           justify-content: center;
@@ -104,8 +108,8 @@
   }
 
   .board-columns-wrapper {
-    flex-direction: column; 
-    padding: 0 16px;
+    flex-direction: column;
+    padding: 0 0 0 16px;
     gap: 24px;
 
     app-board-columns {
@@ -119,11 +123,11 @@
         padding-bottom: 12px;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
-        
+
         // ✅ Scrollbar verstecken aber funktional
         scrollbar-width: none; // Firefox
         -ms-overflow-style: none; // IE/Edge
-        
+
         &::-webkit-scrollbar {
           display: none; // Chrome, Safari, Opera
         }
@@ -132,7 +136,7 @@
           flex: 0 0 280px;
           scroll-snap-align: start;
         }
-        
+
         .empty-state {
           flex: 0 0 100%;
           justify-content: center;
@@ -142,23 +146,21 @@
   }
 }
 
-
 @media (max-width: 480px) {
   .board-container {
     padding: 12px 0px 12px 12px;
   }
 
-  
   .board-columns-wrapper {
-    padding: 0 8px;
+    padding: 0 0 0 8px;
     gap: 20px;
-    
+
     app-board-columns {
       ::ng-deep .tasks-container {
         gap: 12px;
-        
+
         > div {
-          flex: 0 0 260px; 
+          flex: 0 0 260px;
         }
       }
     }

@@ -9,54 +9,38 @@
         }
     </div>
 
-    <div class="tasks-container" 
-         cdkDropList 
-         [cdkDropListData]="tasks" 
-         [id]="columnId"
-         [cdkDropListDisabled]="isMobile"
-         [cdkDropListConnectedTo]="isMobile ? [] : ['todo', 'inprogress', 'awaitfeedback', 'done']"
-         (cdkDropListDropped)="onDrop($event)">
+    <div class="tasks-container" cdkDropList [cdkDropListData]="tasks" [id]="columnId" [cdkDropListDisabled]="isMobile"
+        [cdkDropListConnectedTo]="isMobile ? [] : ['todo', 'inprogress', 'awaitfeedback', 'done']"
+        (cdkDropListDropped)="onDrop($event)">
         @if (tasks.length === 0) {
         <div class="empty-state">
             <p>No tasks {{ title }}</p>
         </div>
         } @else {
         @for (task of tasks; track task.id) {
-        <div cdkDrag 
-             [cdkDragData]="task"
-             [cdkDragDisabled]="isMobile"
-             class="task-wrapper">
-            <app-task-card 
-                [task]="task" 
-                (cardClicked)="onTaskClick($event)"
+        <div cdkDrag [cdkDragData]="task" [cdkDragDisabled]="isMobile" class="task-wrapper">
+            <app-task-card [task]="task" (cardClicked)="onTaskClick($event)"
                 (subtaskToggled)="onSubtaskToggled($event)">
             </app-task-card>
-            
+
             @if (isMobile) {
-            <button 
-                class="mobile-move-btn" 
-                [class.open]="showMoveMenu[task.id!]"
+            <button class="mobile-move-btn" [class.open]="showMoveMenu[task.id!]"
                 (click)="toggleMoveMenu(task.id!, $event)">
-                <img 
-                    src="assets/board/switch-categorie.png" 
-                    alt="Move task" 
-                    class="dropdown-arrow" />
+                <img src="assets/board/switch-categorie.png" alt="Move task" class="dropdown-arrow" />
             </button>
-            
+
             @if (showMoveMenu[task.id!]) {
             <div class="move-menu">
-                @if (columnId !== 'todo') {
-                <button (click)="moveTaskToColumn(task, 'todo', $event)">Move to To Do</button>
-                }
-                @if (columnId !== 'inprogress') {
-                <button (click)="moveTaskToColumn(task, 'inprogress', $event)">Move to In Progress</button>
-                }
-                @if (columnId !== 'awaitfeedback') {
-                <button (click)="moveTaskToColumn(task, 'awaitfeedback', $event)">Move to Await Feedback</button>
-                }
-                @if (columnId !== 'done') {
-                <button (click)="moveTaskToColumn(task, 'done', $event)">Move to Done</button>
-                }
+                <div class="move-menu-header">Move to</div>
+                <div class="move-menu-buttons">
+                    @for (option of getMoveOptions(columnId); track option.id) {
+                    <button class="move-menu-button" (click)="moveTaskToColumn(task, option.id, $event)">
+                        <img [src]="option.direction === 'up' ? 'assets/board/arrow_upward.png' : 'assets/board/arrow_downward.png'"
+                            [alt]="option.direction === 'up' ? 'Move up' : 'Move down'" class="arrow-icon">
+                        <span class="move-label">{{ option.label }}</span>
+                    </button>
+                    }
+                </div>
             </div>
             }
             }

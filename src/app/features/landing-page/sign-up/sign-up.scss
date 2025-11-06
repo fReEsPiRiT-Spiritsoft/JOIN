@@ -25,95 +25,72 @@
   }
 
   .logo-img {
-    height: 60px;
+    height: clamp(35px, 6vw, 60px);
     width: auto;
-
-    @media (max-width: 768px) {
-      height: 45px;
-    }
   }
 }
 
 // Sign Up Card
 .signup-card {
   background: white;
-  border-radius: 30px;
-  padding: 48px 88px;
+  border-radius: clamp(15px, 3vw, 30px);
+  padding: clamp(25px, 5vw, 48px) clamp(20px, 8vw, 88px);
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
   width: 598px;
-  height: 630px;
-  max-width: 598px;
+  max-width: 95%;
   position: relative;
   opacity: 1;
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 916px) {
-    width: 90%;
+  @media (max-width: 955px) {
+    width: clamp(280px, 82vw, 500px);
     max-width: 500px;
-    height: auto;
-    padding: 40px 70px;
-    border-radius: 25px;
   }
 
   @media (max-width: 600px) {
-    width: 95%;
+    width: clamp(280px, 90vw, 450px);
     max-width: 450px;
-    padding: 38px 60px;
   }
 
   @media (max-width: 480px) {
-    width: 100%;
-    max-width: 100%;
-    padding: 35px 40px;
-    border-radius: 20px;
+    width: clamp(300px, 92vw, 380px);
+    max-width: 380px;
+    padding: clamp(25px, 5vw, 35px) clamp(25px, 6vw, 40px);
   }
 
   @media (max-width: 380px) {
-    padding: 30px 30px;
+    max-width: 300px;
   }
 
   h1 {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     font-style: normal;
-    font-size: 61px;
+    font-size: clamp(32px, 8vw, 61px);
     line-height: 120%;
     letter-spacing: 0%;
     color: #2a3647;
     margin: 0 0 10px 0;
     text-align: center;
 
-    @media (max-width: 768px) {
-      font-size: 52px;
-    }
-
-    @media (max-width: 480px) {
-      font-size: 42px;
-    }
-
-    @media (max-width: 380px) {
-      font-size: 36px;
+    @media (max-width: 365px) {
+      font-size: clamp(28px, 7.5vw, 32px);
     }
   }
 
   .underline {
-    width: 150px;
-    height: 3px;
+    width: clamp(90px, 20vw, 150px);
+    height: clamp(2px, 0.4vw, 3px);
     background-color: #29abe2;
-    margin: 0 auto 40px auto;
-
-    @media (max-width: 480px) {
-      width: 120px;
-      margin: 0 auto 30px auto;
-    }
+    margin: 0 auto clamp(25px, 5vw, 40px) auto;
   }
 }
 
 // Back Button
 .back-btn {
   position: absolute;
-  top: 65px;
+  top: clamp(25px, 7vh, 65px);
   background: none;
   border: none;
   cursor: pointer;
@@ -122,10 +99,6 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.2s;
-
-  @media (max-width: 1024px) {
-    top: 60px;
-  }
 
   @media (max-width: 768px) {
     top: 55px;
@@ -139,14 +112,13 @@
     top: 30px;
   }
 
-  .back-icon {
-    width: 25px;
-    height: 25px;
+  @media (max-width: 380px) {
+    top: 25px;
+  }
 
-    @media (max-width: 480px) {
-      width: 22px;
-      height: 22px;
-    }
+  .back-icon {
+    width: clamp(20px, 3vw, 25px);
+    height: clamp(20px, 3vw, 25px);
   }
 
   &:hover {
@@ -158,16 +130,8 @@
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: clamp(3px, 0.8vw, 5px);
   flex: 1;
-
-  @media (max-width: 768px) {
-    gap: 10px;
-  }
-
-  @media (max-width: 480px) {
-    gap: 8px;
-  }
 }
 
 // Input Group
@@ -178,21 +142,15 @@
 
   .form-input {
     width: 100%;
-    padding: 16px 50px 16px 20px;
+    padding: clamp(12px, 2vw, 16px) clamp(40px, 6vw, 50px) clamp(12px, 2vw, 16px) clamp(14px, 2.5vw, 20px);
     border: 1px solid #d1d1d1;
-    border-radius: 10px;
-    font-size: 16px;
+    border-radius: clamp(6px, 1.2vw, 10px);
+    font-size: clamp(14px, 2vw, 16px);
     outline: none;
     transition: border-color 0.2s ease;
     box-sizing: border-box;
     background-color: #fff;
     position: relative;
-
-    @media (max-width: 480px) {
-      padding: 14px 45px 14px 16px;
-      font-size: 15px;
-      border-radius: 8px;
-    }
 
     &::placeholder {
       color: #d1d1d1;
@@ -209,38 +167,25 @@
 
   .input-icon {
     position: absolute;
-    right: 20px;
-    top: 16px;
+    right: clamp(14px, 2.5vw, 20px);
+    top: clamp(12px, 2vw, 16px);
     pointer-events: none;
-    width: 20px;
-    height: 20px;
-
-    @media (max-width: 480px) {
-      right: 16px;
-      width: 18px;
-      height: 18px;
-      top: 14px;
-    }
+    width: clamp(16px, 2.5vw, 20px);
+    height: clamp(16px, 2.5vw, 20px);
   }
 
   // Fester Error-Container
   .error-text {
-    height: 20px;
+    height: clamp(16px, 2.5vw, 20px);
     font-family: 'Inter', sans-serif;
     font-weight: 400;
-    font-size: 12px;
+    font-size: clamp(10px, 1.5vw, 12px);
     line-height: 120%;
     color: #e60026;
-    margin-top: 6px;
+    margin-top: clamp(4px, 0.8vw, 6px);
     margin-left: 8px;
     opacity: 0;
     transition: opacity 0.25s ease;
-
-    @media (max-width: 480px) {
-      font-size: 11px;
-      height: 18px;
-      margin-top: 5px;
-    }
   }
 
   &.has-error {
@@ -265,13 +210,9 @@
 .checkbox-label {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: clamp(8px, 1.5vw, 12px);
   cursor: pointer;
   user-select: none;
-
-  @media (max-width: 480px) {
-    gap: 10px;
-  }
 
   .checkbox-input {
     position: absolute;
@@ -281,18 +222,15 @@
 
   .checkbox-custom {
     position: relative;
-    width: 18px;
-    height: 18px;
-    min-width: 18px;
+    width: clamp(14px, 2vw, 18px);
+    height: clamp(14px, 2vw, 18px);
+    min-width: clamp(14px, 2vw, 18px);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 2px;
 
-    @media (max-width: 480px) {
-      width: 16px;
-      height: 16px;
-      min-width: 16px;
+    @media (max-width: 380px) {
+      margin-top: 0;
     }
 
     .checkbox-icon {
@@ -307,29 +245,20 @@
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 16px;
-    line-height: 120%;
+    font-size: clamp(12px, 2vw, 16px);
+    line-height: 140%;
     letter-spacing: 0%;
     color: #2a3647;
-
-    @media (max-width: 480px) {
-      font-size: 14px;
-      line-height: 140%;
-    }
 
     .privacy-link {
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-style: normal;
-      font-size: 16px;
+      font-size: clamp(12px, 2vw, 16px);
       line-height: 120%;
       letter-spacing: 0%;
       color: #29abe2;
       text-decoration: none;
-
-      @media (max-width: 480px) {
-        font-size: 14px;
-      }
 
       &:hover {
         text-decoration: underline;
@@ -340,21 +269,16 @@
 
 // General Error Message
 .error-message {
-  height: 20px;
+  height: clamp(16px, 2.5vw, 20px);
   font-family: 'Inter', sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: clamp(11px, 1.8vw, 14px);
   line-height: 120%;
   color: #e60026;
   text-align: center;
   opacity: 0;
   transition: opacity 0.25s ease;
-  margin: 8px 0;
-
-  @media (max-width: 480px) {
-    font-size: 13px;
-    height: 18px;
-  }
+  margin: clamp(6px, 1vw, 8px) 0;
 
   &.visible {
     opacity: 1;
@@ -363,11 +287,11 @@
 
 // Button
 .btn-primary {
-  width: 126px;
-  height: 55px;
-  padding: 15px 24px;
-  border-radius: 8px;
-  font-size: 16px;
+  width: clamp(100px, 15vw, 126px);
+  height: clamp(44px, 6vw, 55px);
+  padding: clamp(10px, 2vw, 15px) clamp(18px, 3vw, 24px);
+  border-radius: clamp(6px, 1vw, 8px);
+  font-size: clamp(14px, 2vw, 16px);
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s, box-shadow 0.2s;
@@ -380,13 +304,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @media (max-width: 480px) {
-    width: 110px;
-    height: 48px;
-    padding: 12px 20px;
-    font-size: 15px;
-  }
 
   &:hover:not(:disabled) {
     background-color: #29abe2;
@@ -403,31 +320,16 @@
 // Footer
 .signup-footer {
   position: absolute;
-  bottom: 40px;
+  bottom: clamp(15px, 5vh, 40px);
   display: flex;
-  gap: 40px;
+  gap: clamp(15px, 5vw, 40px);
   align-items: center;
-
-  @media (max-width: 768px) {
-    bottom: 30px;
-    gap: 30px;
-  }
-
-  @media (max-width: 480px) {
-    bottom: 20px;
-    gap: 20px;
-  }
-
-  @media (max-width: 380px) {
-    bottom: 15px;
-    gap: 15px;
-  }
 
   a {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 16px;
+    font-size: clamp(12px, 2vw, 16px);
     line-height: 120%;
     letter-spacing: 0%;
     vertical-align: middle;
@@ -444,10 +346,6 @@
       user-select: none;
       pointer-events: none;
       display: block;
-    }
-
-    @media (max-width: 480px) {
-      font-size: 14px;
     }
 
     &:hover {

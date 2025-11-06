@@ -62,24 +62,20 @@ export class AuthService {
    * Erstellt einen Contact aus User-Daten
    */
   private async createContactFromUser(user: User): Promise<void> {
-    try {
-      const contactsRef = collection(this.firestore, 'contacts');
-      const nameParts = user.name.trim().split(' ');
-      const firstname = nameParts[0] || user.name;
-      const lastname = nameParts.slice(1).join(' ') || '';
-      const contact: Omit<Contact, 'id'> = {
-        firstname: firstname,
-        lastname: lastname,
-        email: user.email,
-        phone: ''
-      };
-
-      await addDoc(contactsRef, contact);
-      console.log('Contact created for user:', user.email);
-    } catch (error) {
-      console.error('Error creating contact:', error);
-    }
+  try {
+    const contactsRef = collection(this.firestore, 'contacts');
+    
+    const contact: Omit<Contact, 'id'> = {
+      firstname: user.name, 
+      lastname: '', 
+      email: user.email,
+      phone: ''
+    };
+    await addDoc(contactsRef, contact);
+  } catch (error) {
+    console.error('Error creating contact:', error);
   }
+}
 
   /**
    * Generiert zufällige Farbe für Contact

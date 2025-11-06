@@ -11,46 +11,67 @@
 
         <form class="signup-form">
             <!-- Name Input -->
-            <div class="input-group">
-                <input type="text" [(ngModel)]="name" name="name" placeholder="Name" class="form-input" />
+            <div class="input-group" [class.has-error]="fieldErrors['name']">
+                <input type="text" [(ngModel)]="name" name="name" placeholder="Name" class="form-input" [attr.data-error]="fieldErrors['name']"
+                />
                 <img src="assets/person-icon.png" alt="Name" class="input-icon" />
+                <div class="error-text">{{ fieldErrors['name'] || '' }}</div>
             </div>
 
             <!-- Email Input -->
-            <div class="input-group">
-                <input type="email" [(ngModel)]="email" name="email" placeholder="Email" class="form-input" />
+            <div class="input-group" [class.has-error]="fieldErrors['email']">
+                <input type="email" [(ngModel)]="email" name="email" placeholder="Email" class="form-input" [attr.data-error]="fieldErrors['email']"/>
                 <img src="assets/signup/mail-signup.png" alt="Email" class="input-icon" />
+                <div class="error-text">{{ fieldErrors['email'] || '' }}</div>
             </div>
 
             <!-- Password Input -->
-            <div class="input-group">
+            <div class="input-group" [class.has-error]="fieldErrors['password']">
                 <input type="password" [(ngModel)]="password" name="password" placeholder="Password"
-                    class="form-input" />
+                    class="form-input" [attr.data-error]="fieldErrors['password']"/>
                 <img src="assets/signup/lock-signup.png" alt="Password" class="input-icon" />
+                <div class="error-text">{{ fieldErrors['password'] || '' }}</div>
             </div>
 
             <!-- Confirm Password Input -->
-            <div class="input-group">
+            <div class="input-group" [class.has-error]="fieldErrors['confirmPassword']">
                 <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword"
-                    placeholder="Confirm Password" class="form-input" />
-                <img src="assets/signup/lock-signup.png" alt="Confirm Password" class="input-icon" />
+                    placeholder="Confirm Password" class="form-input" [attr.data-error]="fieldErrors['confirmPassword']"/>
+                <img src="assets/signup/lock-signup.png" alt="Confirm Password" class="input-icon"/>
+                <div class="error-text">{{ fieldErrors['confirmPassword'] || '' }}</div>
             </div>
 
             <!-- Privacy Policy Checkbox -->
             <div class="checkbox-group">
-                <label class="checkbox-label">
-                    <input type="checkbox" [(ngModel)]="acceptPrivacyPolicy" name="acceptPrivacyPolicy"
-                        class="checkbox-input" />
-                    <span class="checkbox-custom"></span>
+                <label class="checkbox-label" 
+                       (mouseenter)="onCheckboxHover(true)" 
+                       (mouseleave)="onCheckboxHover(false)">
+                    <input type="checkbox" 
+                           [(ngModel)]="acceptPrivacyPolicy" 
+                           name="acceptPrivacyPolicy"
+                           (change)="onCheckboxChange()"
+                           class="checkbox-input" />
+                    <span class="checkbox-custom">
+                        <img [src]="checkboxImageSrc" alt="Checkbox" class="checkbox-icon" />
+                    </span>
                     <span class="checkbox-text">
                         I accept the <a routerLink="/privacy-policy" class="privacy-link">Privacy policy</a>
                     </span>
                 </label>
             </div>
 
+            <div class="error-message" [class.visible]="errorMessage">
+                {{ errorMessage }}
+            </div>
+              
+
             <!-- Sign Up Button -->
-            <button type="button" class="btn-primary" (click)="onSignUp()">
-                Sign up
+            <button type="button" 
+                    class="btn-primary" 
+                    (click)="onSignUp()"
+                    [disabled]="isLoading">
+                <span *ngIf="!isLoading">Sign up</span>
+                <span *ngIf="isLoading">Loading...</span>
             </button>
         </form>
     </div>

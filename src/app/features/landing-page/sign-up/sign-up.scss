@@ -6,44 +6,114 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  padding: 20px;
+
+  @media (max-width: 480px) {
+    padding: 15px;
+  }
+}
+
+// Logo
+.logo-container {
+  position: absolute;
+  top: 40px;
+  left: 80px;
+
+  @media (max-width: 768px) {
+    top: 20px;
+    left: 30px;
+  }
+
+  .logo-img {
+    height: 60px;
+    width: auto;
+
+    @media (max-width: 768px) {
+      height: 45px;
+    }
+  }
 }
 
 // Sign Up Card
 .signup-card {
   background: white;
   border-radius: 30px;
-  padding: 50px 60px;
+  padding: 48px 88px;
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
-  max-width: 480px;
-  width: 100%;
+  width: 598px;
+  height: 630px;
+  max-width: 598px;
   position: relative;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
 
-  @media (max-width: 768px) {
-    padding: 40px 30px;
+  @media (max-width: 916px) {
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+    padding: 40px 70px;
+    border-radius: 25px;
+  }
+
+  @media (max-width: 600px) {
+    width: 95%;
+    max-width: 450px;
+    padding: 38px 60px;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    max-width: 100%;
+    padding: 35px 40px;
     border-radius: 20px;
   }
 
+  @media (max-width: 380px) {
+    padding: 30px 30px;
+  }
+
   h1 {
-    font-size: 48px;
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
+    font-style: normal;
+    font-size: 61px;
+    line-height: 120%;
+    letter-spacing: 0%;
     color: #2a3647;
     margin: 0 0 10px 0;
     text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: 52px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 42px;
+    }
+
+    @media (max-width: 380px) {
+      font-size: 36px;
+    }
   }
 
   .underline {
-    width: 100px;
+    width: 150px;
     height: 3px;
     background-color: #29abe2;
     margin: 0 auto 40px auto;
+
+    @media (max-width: 480px) {
+      width: 120px;
+      margin: 0 auto 30px auto;
+    }
   }
 }
 
 // Back Button
 .back-btn {
   position: absolute;
-  top: 40px;
-  left: 40px;
+  top: 65px;
   background: none;
   border: none;
   cursor: pointer;
@@ -53,18 +123,34 @@
   justify-content: center;
   transition: transform 0.2s;
 
+  @media (max-width: 1024px) {
+    top: 60px;
+  }
+
+  @media (max-width: 768px) {
+    top: 55px;
+  }
+
+  @media (max-width: 600px) {
+    top: 50px;
+  }
+
+  @media (max-width: 480px) {
+    top: 30px;
+  }
+
   .back-icon {
     width: 25px;
     height: 25px;
+
+    @media (max-width: 480px) {
+      width: 22px;
+      height: 22px;
+    }
   }
 
   &:hover {
     transform: translateX(-3px);
-  }
-
-  @media (max-width: 768px) {
-    top: 20px;
-    left: 20px;
   }
 }
 
@@ -72,11 +158,23 @@
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
+  flex: 1;
+
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 8px;
+  }
 }
 
+// Input Group
 .input-group {
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   .form-input {
     width: 100%;
@@ -85,8 +183,16 @@
     border-radius: 10px;
     font-size: 16px;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s ease;
     box-sizing: border-box;
+    background-color: #fff;
+    position: relative;
+
+    @media (max-width: 480px) {
+      padding: 14px 45px 14px 16px;
+      font-size: 15px;
+      border-radius: 8px;
+    }
 
     &::placeholder {
       color: #d1d1d1;
@@ -95,22 +201,65 @@
     &:focus {
       border-color: #29abe2;
     }
+
+    &.error {
+      border-color: #e60026;
+    }
   }
 
   .input-icon {
     position: absolute;
     right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 16px;
     pointer-events: none;
     width: 20px;
     height: 20px;
+
+    @media (max-width: 480px) {
+      right: 16px;
+      width: 18px;
+      height: 18px;
+      top: 14px;
+    }
+  }
+
+  // Fester Error-Container
+  .error-text {
+    height: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 120%;
+    color: #e60026;
+    margin-top: 6px;
+    margin-left: 8px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+
+    @media (max-width: 480px) {
+      font-size: 11px;
+      height: 18px;
+      margin-top: 5px;
+    }
+  }
+
+  &.has-error {
+    .form-input {
+      border-color: #e60026;
+    }
+
+    .error-text {
+      opacity: 1;
+    }
   }
 }
 
 // Checkbox
 .checkbox-group {
-  margin-top: 8px;
+  margin-top: 0px;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 0px;
 }
 
 .checkbox-label {
@@ -120,19 +269,14 @@
   cursor: pointer;
   user-select: none;
 
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
+
   .checkbox-input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
-
-    &:checked ~ .checkbox-custom {
-      background-color: #2a3647;
-      border-color: #2a3647;
-
-      &::after {
-        display: block;
-      }
-    }
   }
 
   .checkbox-custom {
@@ -140,31 +284,52 @@
     width: 18px;
     height: 18px;
     min-width: 18px;
-    border: 2px solid #d1d1d1;
-    border-radius: 3px;
-    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
 
-    &::after {
-      content: '';
-      position: absolute;
-      display: none;
-      left: 5px;
-      top: 2px;
-      width: 4px;
-      height: 8px;
-      border: solid white;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
+    @media (max-width: 480px) {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+    }
+
+    .checkbox-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: all 0.2s;
     }
   }
 
   .checkbox-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 120%;
+    letter-spacing: 0%;
     color: #2a3647;
-    font-size: 14px;
+
+    @media (max-width: 480px) {
+      font-size: 14px;
+      line-height: 140%;
+    }
 
     .privacy-link {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 16px;
+      line-height: 120%;
+      letter-spacing: 0%;
       color: #29abe2;
       text-decoration: none;
+
+      @media (max-width: 480px) {
+        font-size: 14px;
+      }
 
       &:hover {
         text-decoration: underline;
@@ -173,26 +338,121 @@
   }
 }
 
+// General Error Message
+.error-message {
+  height: 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 120%;
+  color: #e60026;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  margin: 8px 0;
+
+  @media (max-width: 480px) {
+    font-size: 13px;
+    height: 18px;
+  }
+
+  &.visible {
+    opacity: 1;
+  }
+}
+
 // Button
 .btn-primary {
-  width: 100%;
-  padding: 14px 20px;
+  width: 126px;
+  height: 55px;
+  padding: 15px 24px;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
   border: none;
   background-color: #2a3647;
   color: white;
-  margin-top: 12px;
+  margin: 0 auto;
+  gap: 10px;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  &:hover {
+  @media (max-width: 480px) {
+    width: 110px;
+    height: 48px;
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+
+  &:hover:not(:disabled) {
     background-color: #29abe2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
   &:disabled {
     background-color: #d1d1d1;
     cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+// Footer
+.signup-footer {
+  position: absolute;
+  bottom: 40px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    bottom: 30px;
+    gap: 30px;
+  }
+
+  @media (max-width: 480px) {
+    bottom: 20px;
+    gap: 20px;
+  }
+
+  @media (max-width: 380px) {
+    bottom: 15px;
+    gap: 15px;
+  }
+
+  a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 120%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: #a8a8a8;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &::after {
+      content: attr(title);
+      font-weight: 700;
+      height: 0;
+      visibility: hidden;
+      overflow: hidden;
+      user-select: none;
+      pointer-events: none;
+      display: block;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 14px;
+    }
+
+    &:hover {
+      color: #29abe2;
+      font-weight: 700;
+    }
   }
 }

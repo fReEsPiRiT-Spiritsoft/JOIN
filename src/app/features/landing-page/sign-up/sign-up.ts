@@ -19,30 +19,59 @@ export class SignUp {
   acceptPrivacyPolicy = false;
   errorMessage = '';
   isLoading = false;
+  checkboxImageSrc = 'assets/check-box/check-box.png';
+
+  fieldErrors: Record<string, string> = {};
 
   private router = inject(Router);
   private authService = inject(AuthService);
 
+  private isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
   async onSignUp() {
-    if (!this.email || !this.password || !this.confirmPassword) {
-      this.errorMessage = 'Please fill in all fields';
-      return;
+    this.errorMessage = '';
+    this.fieldErrors = {};
+    const fieldErrors: Record<string, string> = {};
+
+    if (!this.name.trim()) {
+      fieldErrors['name'] = 'Name is required';
+    }
+
+    if (!this.email.trim()) {
+      fieldErrors['email'] = 'Email is required';
+    } else if (!this.isValidEmail(this.email.trim())) {
+      fieldErrors['email'] = 'Please enter a valid email address';
     }
 
     if (this.password !== this.confirmPassword) {
       this.errorMessage = 'Passwords do not match';
-      return;
     }
 
-    if (this.password.length < 6) {
-      this.errorMessage = 'Password must be at least 6 characters';
-      return;
+    if (!this.password) {
+      fieldErrors['password'] = 'Password is required';
+    } else if (this.password.length < 6) {
+      fieldErrors['password'] = 'Password must be at least 6 characters';
+    }
+
+    if (!this.confirmPassword) {
+      fieldErrors['confirmPassword'] = 'Please confirm your password';
+    } else if (this.password !== this.confirmPassword) {
+      fieldErrors['confirmPassword'] = 'Passwords do not match';
     }
 
     if (!this.acceptPrivacyPolicy) {
       this.errorMessage = 'Please accept the privacy policy';
+    }
+
+    this.fieldErrors = fieldErrors;
+
+    if (Object.keys(fieldErrors).length > 0 || this.errorMessage) {
       return;
     }
+
 
     this.isLoading = true;
     this.errorMessage = '';
@@ -66,5 +95,23 @@ export class SignUp {
 
   goBackToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  onCheckboxHover(isHovering: boolean) {
+    if (this.acceptPrivacyPolicy) {
+      this.checkboxImageSrc = isHovering 
+        ? 'assets/check-box/checkbox-checked-hovered.png'
+        : 'assets/check-box/check-box-checked.png';
+    } else {
+      this.checkboxImageSrc = isHovering 
+        ? 'assets/check-box/check-box-hovered.png'
+        : 'assets/check-box/check-box.png';
+    }
+  }
+
+  onCheckboxChange() {
+    this.checkboxImageSrc = this.acceptPrivacyPolicy 
+      ? 'assets/check-box/check-box-checked.png'
+      : 'assets/check-box/check-box.png';
   }
 }

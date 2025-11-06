@@ -5,6 +5,7 @@ import { Header } from './shared/components/header/header';
 import { Navbar } from './shared/components/navbar/navbar';
 import { ContactService } from './core/services/db-contact-service';
 import { ContactHelper, Contact } from './core/interfaces/db-contact-interface';
+import { AnimationService } from './core/services/animation-service';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -16,19 +17,32 @@ import { filter } from 'rxjs/operators';
 export class App implements OnInit {
   contacts: Contact[] = [];
   showNavigation = false;
+  showLogo = false;
+  logoAnimating = false;
 
   private contactService = inject(ContactService);
   private router = inject(Router);
-
-  constructor() {
-    // Check route immediately in constructor to prevent flash
-    this.checkRoute(this.router.url);
-  }
+  private animationService = inject(AnimationService);
 
   async ngOnInit() {
-    this.contacts = await this.contactService.getAllContacts();
+    this.checkRoute(this.router.url);
 
-    // Listen to route changes
+    this.contactService.getAllContacts().then((contacts) => {
+      this.contacts = contacts;
+    });
+
+    if (this.router.url === '/' && this.animationService.shouldPlayIntro()) {
+      this.logoAnimating = true;
+      this.showLogo = true;
+
+      setTimeout(() => {
+        this.logoAnimating = false;
+      }, 2000);
+    } else if (this.router.url === '/login' || this.router.url === '/signup') {
+      this.showLogo = true;
+      this.logoAnimating = false;
+    }
+
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
@@ -37,8 +51,9 @@ export class App implements OnInit {
   }
 
   private checkRoute(url: string) {
-    // Hide navigation on auth pages
     const authRoutes = ['/', '/login', '/signup'];
     this.showNavigation = !authRoutes.includes(url);
+
+    this.showLogo = authRoutes.includes(url);
   }
 }

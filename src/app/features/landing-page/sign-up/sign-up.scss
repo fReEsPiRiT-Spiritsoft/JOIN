@@ -9,28 +9,10 @@
   padding: 20px;
 }
 
-// Logo
 .logo-container {
-  position: absolute;
-  top: 40px;
-  left: 80px;
-
-  @media (max-width: 768px) {
-    top: 20px;
-    left: 30px;
-  }
-
-  .logo-img {
-    height: 60px;
-    width: auto;
-
-    @media (max-width: 768px) {
-      height: 45px;
-    }
-  }
+  display: none;
 }
 
-// Sign Up Card
 .signup-card {
   background: white;
   border-radius: 30px;
@@ -61,7 +43,6 @@
   }
 }
 
-// Back Button
 .back-btn {
   position: absolute;
   top: 40px;
@@ -90,7 +71,6 @@
   }
 }
 
-// Form
 .signup-form {
   display: flex;
   flex-direction: column;
@@ -130,7 +110,6 @@
   }
 }
 
-// Checkbox
 .checkbox-group {
   margin-top: 8px;
 }
@@ -195,7 +174,6 @@
   }
 }
 
-// Button
 .btn-primary {
   width: 100%;
   padding: 14px 20px;
@@ -219,7 +197,6 @@
   }
 }
 
-// Footer
 .signup-footer {
   position: absolute;
   bottom: 40px;

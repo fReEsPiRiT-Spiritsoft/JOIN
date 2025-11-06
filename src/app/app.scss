@@ -1,3 +1,122 @@
+.app-logo-container {
+  position: fixed;
+  z-index: 9999;
+
+  &.animate {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: appLogoPositionDesktop 2s ease-in-out forwards;
+    opacity: 0;
+    animation: appLogoPositionDesktop 2s ease-in-out forwards, fadeInLogo 0.5s ease-in forwards;
+
+    .app-logo {
+      width: 274px;
+      height: 334px;
+      animation: appLogoSizeDesktop 2s ease-in-out forwards;
+    }
+  }
+
+  &.final-position {
+    top: 40px;
+    left: 80px;
+
+    .app-logo {
+      width: 100px;
+      height: 122px;
+    }
+  }
+}
+
+.app-logo {
+  display: block;
+}
+
+@keyframes fadeInLogo {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes appLogoPositionDesktop {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  100% {
+    top: 40px;
+    left: 80px;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes appLogoSizeDesktop {
+  0% {
+    width: 274px;
+    height: 334px;
+  }
+
+  100% {
+    width: 100px;
+    height: 122px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-logo-container {
+    &.animate {
+      animation: appLogoPositionMobile 2s ease-in-out forwards, fadeInLogo 0.5s ease-in forwards;
+
+      .app-logo {
+        width: 200px;
+        height: 244px;
+        animation: appLogoSizeMobile 2s ease-in-out forwards;
+      }
+    }
+
+    &.final-position {
+      top: 30px;
+      left: 40px;
+
+      .app-logo {
+        width: 60px;
+        height: 73px;
+      }
+    }
+  }
+
+  @keyframes appLogoPositionMobile {
+    0% {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    100% {
+      top: 30px;
+      left: 40px;
+      transform: translate(0, 0);
+    }
+  }
+
+  @keyframes appLogoSizeMobile {
+    0% {
+      width: 200px;
+      height: 244px;
+    }
+
+    100% {
+      width: 60px;
+      height: 73px;
+    }
+  }
+}
+
 .main-content {
   margin-left: 232px;
   margin-top: 96px;

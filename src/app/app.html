@@ -1,3 +1,9 @@
+@if (showLogo) {
+<div class="app-logo-container" [class.animate]="logoAnimating" [class.final-position]="!logoAnimating">
+    <img src="assets/landingspage-logo.png" alt="Join Logo" class="app-logo" />
+</div>
+}
+
 @if (showNavigation) {
 <app-navbar />
 <div class="main-content">

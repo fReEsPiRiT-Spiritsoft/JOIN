@@ -7,6 +7,18 @@
   justify-content: center;
   position: relative;
   padding: 20px;
+
+  // Smooth fade-in animation
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 // Header
@@ -25,26 +37,19 @@
   }
 }
 
+.header-spacer {
+  // Platzhalter für das animierte Logo von der Landing Page
+  width: 100px;
+  height: 60px;
+
+  @media (max-width: 768px) {
+    width: 60px;
+    height: 45px;
+  }
+}
+
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  .logo-img {
-    height: 60px;
-    width: auto;
-
-    @media (max-width: 768px) {
-      height: 45px;
-    }
-  }
-
-  .logo-text {
-    font-size: 32px;
-    font-weight: 700;
-    color: #2a3647;
-    letter-spacing: 1px;
-  }
+  display: none; // Logo wurde entfernt, wird von Landing Page übernommen
 }
 
 .header-actions {

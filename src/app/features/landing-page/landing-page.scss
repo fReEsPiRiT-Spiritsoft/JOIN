@@ -168,10 +168,13 @@
     color: #a8a8a8;
     text-decoration: none;
     font-size: 14px;
-    transition: color 0.2s;
+    transition: color 0.2s, font-weight 0.2s;
+    display: inline-block;
+    min-width: fit-content;
 
     &:hover {
       color: #29abe2;
+      font-weight: 700;
     }
   }
 }

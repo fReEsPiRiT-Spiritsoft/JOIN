@@ -8,7 +8,7 @@ import { AuthService } from '../../../core/services/auth-service';
   imports: [CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
-  standalone: true
+  standalone: true,
 })
 export class Header implements OnInit {
   private authService = inject(AuthService);
@@ -85,5 +85,12 @@ export class Header implements OnInit {
     this.authService.logout();
     this.showDropdown = false;
     this.router.navigate(['/login']);
+  }
+
+  /**
+   * Navigiert zur Help-Seite
+   */
+  navigateToHelp() {
+    this.router.navigate(['/help']);
   }
 }

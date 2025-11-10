@@ -3,10 +3,11 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth-service';
+import { Header } from "../../../shared/components/header/header";
 
 @Component({
   selector: 'app-log-in',
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, Header],
   templateUrl: './log-in.html',
   styleUrl: './log-in.scss',
   standalone: true,
@@ -19,15 +20,19 @@ export class LogIn {
   passwordError = '';
   isLoading = false;
 
+  showWelcome = false;
+  welcomeUserName = '';
+  timeOfDay = 'morning';
+
+  // ✅ Caps Lock Warning
+  capsLockOn = false;
+
   private router = inject(Router);
   private authService = inject(AuthService);
 
-  /**
-   *  
-   */
   validateEmail(): void {
     this.emailError = '';
-    
+
     if (!this.email) {
       this.emailError = 'Email is required';
       return;
@@ -40,12 +45,9 @@ export class LogIn {
     }
   }
 
-  /**
-   *  
-   */
   validatePassword(): void {
     this.passwordError = '';
-    
+
     if (!this.password) {
       this.passwordError = 'Password is required';
       return;
@@ -58,8 +60,22 @@ export class LogIn {
   }
 
   /**
-   * 
+   * ✅ Caps Lock Detection
    */
+  onPasswordKeydown(event: KeyboardEvent): void {
+    // getModifierState prüft ob Caps Lock aktiv ist
+    this.capsLockOn = event.getModifierState('CapsLock');
+  }
+
+  /**
+   * ✅ Caps Lock bei Blur zurücksetzen
+   */
+  onPasswordBlur(): void {
+    this.validatePassword();
+    // Optional: Caps Lock Warning behalten oder entfernen
+    // this.capsLockOn = false;
+  }
+
   async onLogin() {
     this.validateEmail();
     this.validatePassword();
@@ -73,8 +89,13 @@ export class LogIn {
       password: this.password
     });
     this.isLoading = false;
+
     if (result.success) {
-      this.router.navigate(['/summary']);
+      if (window.innerWidth < 1169 && result.user?.name) {
+        this.showWelcomeAnimation(result.user.name);
+      } else {
+        this.router.navigate(['/summary']);
+      }
     } else {
       this.errorMessage = result.message;
       if (result.message.includes('email')) {
@@ -85,12 +106,9 @@ export class LogIn {
     }
   }
 
-  /**
-   * 
-   */
   onGuestLogin() {
     this.isLoading = true;
-    
+
     const guestUser = {
       id: 'guest',
       email: 'guest@join.com',
@@ -98,26 +116,42 @@ export class LogIn {
       password: '',
       createdAt: new Date()
     };
-    
     localStorage.setItem('currentUser', JSON.stringify(guestUser));
     this.authService['currentUserSubject'].next(guestUser);
-    
     setTimeout(() => {
       this.isLoading = false;
-      this.router.navigate(['/summary']);
+      if (window.innerWidth < 1169) {
+        this.showWelcomeAnimation('Guest User');
+      } else {
+        this.router.navigate(['/summary']);
+      }
     }, 300);
   }
 
-  /**
-   * 
-   */
+  private showWelcomeAnimation(userName: string): void {
+    const hour = new Date().getHours();
+    if (hour < 12) {
+      this.timeOfDay = 'morning';
+    } else if (hour < 18) {
+      this.timeOfDay = 'afternoon';
+    } else {
+      this.timeOfDay = 'evening';
+    }
+
+    this.welcomeUserName = userName;
+    this.showWelcome = true;
+    setTimeout(() => {
+      setTimeout(() => {
+        this.router.navigate(['/summary']);
+        this.showWelcome = false;
+      }, 500);
+    }, 2500);
+  }
+
   navigateToSignUp() {
     this.router.navigate(['/signup']);
   }
 
-  /**
-   * 
-   */
   onEmailInput(): void {
     if (this.emailError) {
       this.emailError = '';

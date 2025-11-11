@@ -1,6 +1,6 @@
 .signup-container {
   width: 100%;
-  min-height: 70vh;
+  min-height: 70dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,12 +46,12 @@
   @media (max-width: 900px) and (min-width: 750px) {
     padding: 5px clamp(20px, 5vw, 50px);
     gap: 0px;
-  
+
     h1 {
       font-size: clamp(24px, 5vw, 38px);
       margin: 0 0 5px 0;
     }
-  
+
     .underline {
       margin: 0 auto clamp(12px, 3vw, 20px) auto;
     }
@@ -164,7 +164,8 @@
 
   .form-input {
     width: 100%;
-    padding: clamp(12px, 2vw, 16px) clamp(40px, 6vw, 50px) clamp(12px, 2vw, 16px) clamp(14px, 2.5vw, 20px);
+    padding: clamp(12px, 2vw, 16px) clamp(40px, 6vw, 50px) clamp(12px, 2vw, 16px)
+      clamp(14px, 2.5vw, 20px);
     border: 1px solid #d1d1d1;
     border-radius: clamp(6px, 1.2vw, 10px);
     font-size: clamp(14px, 2vw, 16px);
@@ -385,8 +386,6 @@
     }
   }
 }
-
-
 
 // ✅ Success Message Overlay
 .success-overlay {

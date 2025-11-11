@@ -1,6 +1,6 @@
 .login-container {
   width: 100%;
-  min-height: 70vh;
+  min-height: 70dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,7 +8,7 @@
   position: relative;
 
   @media (max-height: 800px) {
-    min-height: 65vh;
+    min-height: 65dvh;
     margin-top: 10px;
   }
 }

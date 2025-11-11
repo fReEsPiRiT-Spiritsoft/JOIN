@@ -2,7 +2,8 @@
   <label>Subtasks</label>
   <div class="subtask-input-wrapper">
     <input type="text" [(ngModel)]="newSubtaskTitle" name="newSubtask" placeholder="Add new subtask"
-      (keyup.enter)="addSubtask()" (focus)="onSubtaskInputFocus()" (blur)="onSubtaskInputBlur()" maxlength="50" />
+      (keyup.enter)="addSubtask()" (input)="onSubtaskInput()" (focus)="onSubtaskInputFocus()"
+      (blur)="onSubtaskInputBlur()" maxlength="20" />
     @if (subtaskInputFocused || newSubtaskTitle) {
     <div class="subtask-actions">
       <button type="button" class="icon-btn" (click)="clearSubtaskInput()">
@@ -26,7 +27,7 @@
       @if (editingSubtaskId === subtask.id) {
       <div class="subtask-edit-wrapper">
         <input type="text" #editInput [value]="subtask.title" (keyup.enter)="saveSubtask(subtask, editInput.value)"
-          class="edit-input" maxlength="50" />
+          class="edit-input" maxlength="20" />
         <div class="subtask-edit-actions">
           <button type="button" class="icon-btn small" (click)="deleteSubtask(subtask.id)">
             <svg width="16" height="18" viewBox="0 0 16 18" fill="none">

@@ -18,6 +18,12 @@ export class SubtaskManagerComponent {
   editingSubtaskId: string | null = null;
   subtaskInputFocused = false;
 
+  onSubtaskInput() {
+    if (this.newSubtaskTitle.length > 20) {
+      this.newSubtaskTitle = this.newSubtaskTitle.substring(0, 20);
+    }
+  }
+
   onSubtaskInputFocus() {
     this.subtaskInputFocused = true;
   }
@@ -37,11 +43,12 @@ export class SubtaskManagerComponent {
 
   addSubtask() {
     if (this.newSubtaskTitle.trim()) {
+      const trimmedTitle = this.newSubtaskTitle.trim().substring(0, 20);
       const updatedSubtasks = [
         ...this.subtasks,
         {
           id: Date.now().toString(),
-          title: this.newSubtaskTitle.trim(),
+          title: trimmedTitle,
           completed: false,
         },
       ];
@@ -57,7 +64,7 @@ export class SubtaskManagerComponent {
 
   saveSubtask(subtask: Subtask, newTitle: string) {
     if (newTitle.trim()) {
-      subtask.title = newTitle.trim();
+      subtask.title = newTitle.trim().substring(0, 20);
       this.subtasksChange.emit([...this.subtasks]);
     }
     this.editingSubtaskId = null;

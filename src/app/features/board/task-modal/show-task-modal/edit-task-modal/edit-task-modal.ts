@@ -50,13 +50,10 @@ export class EditTaskModal implements OnInit, OnChanges {
   priority: 'urgent' | 'medium' | 'low' = 'medium';
   selectedContactIds: string[] = [];
   subtasks: Subtask[] = [];
-
   contacts: Contact[] = [];
-
   titleError = false;
   dueDateError = false;
   dueDateErrorMessage = 'This field is required';
-
   isLoadingContacts = false;
   contactsLoaded = false;
 
@@ -66,12 +63,7 @@ export class EditTaskModal implements OnInit, OnChanges {
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes['showModal'] && this.showModal && this.task) {
-      if (!this.contactsLoaded && !this.isLoadingContacts) {
-        await this.loadContacts();
-      }
-      while (this.isLoadingContacts) {
-        await new Promise((resolve) => setTimeout(resolve, 50));
-      }
+      await this.ensureContactsLoaded();
       this.populateForm();
     }
     if (changes['task'] && !changes['task'].firstChange && this.showModal && this.task) {
@@ -79,11 +71,17 @@ export class EditTaskModal implements OnInit, OnChanges {
     }
   }
 
-  async loadContacts() {
-    if (this.isLoadingContacts || this.contactsLoaded) {
-      return;
+  private async ensureContactsLoaded() {
+    if (!this.contactsLoaded && !this.isLoadingContacts) {
+      await this.loadContacts();
     }
+    while (this.isLoadingContacts) {
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+  }
 
+  async loadContacts() {
+    if (this.isLoadingContacts || this.contactsLoaded) return;
     this.isLoadingContacts = true;
     try {
       this.contacts = await this.contactService.getAllContacts();
@@ -104,23 +102,23 @@ export class EditTaskModal implements OnInit, OnChanges {
   }
 
   populateForm() {
-    if (!this.task) {
-      return;
-    }
+    if (!this.task) return;
     this.title = this.task.title;
     this.description = this.task.description;
     this.priority = this.task.priority;
     this.selectedContactIds = this.task.assignedTo ? [...this.task.assignedTo] : [];
     this.subtasks = this.task.subtasks ? JSON.parse(JSON.stringify(this.task.subtasks)) : [];
-    if (this.task.dueDate) {
-      const date = this.task.dueDate.toDate();
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
+    this.populateDueDate();
+  }
 
-      this.dueDate = `${day}/${month}/${year}`;
-      this.hiddenDateValue = `${year}-${month}-${day}`;
-    }
+  private populateDueDate() {
+    if (!this.task?.dueDate) return;
+    const date = this.task.dueDate.toDate();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    this.dueDate = `${day}/${month}/${year}`;
+    this.hiddenDateValue = `${year}-${month}-${day}`;
   }
 
   @HostListener('document:keydown.escape')
@@ -131,77 +129,76 @@ export class EditTaskModal implements OnInit, OnChanges {
   }
 
   validateForm(): boolean {
-    let isValid = true;
+    const isTitleValid = this.validateTitle();
+    const isDateValid = this.validateDueDate();
+    return isTitleValid && isDateValid;
+  }
 
-    if (!this.title.trim()) {
-      this.titleError = true;
-      isValid = false;
-    } else {
-      this.titleError = false;
-    }
+  private validateTitle(): boolean {
+    this.titleError = !this.title.trim();
+    return !this.titleError;
+  }
 
+  private validateDueDate(): boolean {
     if (!this.dueDate) {
       this.dueDateError = true;
       this.dueDateErrorMessage = 'This field is required';
-      isValid = false;
-    } else {
-      const [day, month, year] = this.dueDate.split('/');
-      if (day && month && year) {
-        const selectedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        if (selectedDate < today) {
-          this.dueDateError = true;
-          this.dueDateErrorMessage = 'Date cannot be in the past';
-          isValid = false;
-        } else {
-          this.dueDateError = false;
-        }
-      } else {
-        this.dueDateError = true;
-        this.dueDateErrorMessage = 'Invalid date format';
-        isValid = false;
-      }
+      return false;
     }
+    return this.validateDateFormat();
+  }
 
-    return isValid;
+  private validateDateFormat(): boolean {
+    const [day, month, year] = this.dueDate.split('/');
+    if (!day || !month || !year) {
+      this.dueDateError = true;
+      this.dueDateErrorMessage = 'Invalid date format';
+      return false;
+    }
+    return this.validateDateNotPast(day, month, year);
+  }
+
+  private validateDateNotPast(day: string, month: string, year: string): boolean {
+    const selectedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (selectedDate < today) {
+      this.dueDateError = true;
+      this.dueDateErrorMessage = 'Date cannot be in the past';
+      return false;
+    }
+    this.dueDateError = false;
+    return true;
   }
 
   async onSubmit() {
-    if (!this.validateForm()) {
-      return;
+    if (!this.validateForm() || !this.task?.id) return;
+    const updates = this.buildTaskUpdates();
+    try {
+      await this.taskService.updateTask(this.task.id, updates);
+      this.emitUpdatedTask(updates);
+      this.onClose();
+    } catch (error) {
+      console.error('Error updating task:', error);
     }
+  }
 
-    if (!this.task || !this.task.id) {
-      console.error('No task or task.id');
-      return;
-    }
-
+  private buildTaskUpdates(): Partial<Task> {
     const [day, month, year] = this.dueDate.split('/');
-    const dueDateTimestamp = Timestamp.fromDate(
-      new Date(parseInt(year), parseInt(month) - 1, parseInt(day))
-    );
-    const updates: Partial<Task> = {
+    return {
       title: this.title.trim(),
       description: this.description.trim(),
-      dueDate: dueDateTimestamp,
+      dueDate: Timestamp.fromDate(new Date(parseInt(year), parseInt(month) - 1, parseInt(day))),
       priority: this.priority,
       assignedTo: [...this.selectedContactIds],
       subtasks: [...this.subtasks],
       updatedAt: Timestamp.now(),
     };
-    try {
-      await this.taskService.updateTask(this.task.id, updates);
-      const updatedTask: Task = {
-        ...this.task,
-        ...updates,
-      };
-      this.taskUpdated.emit(updatedTask);
-      this.onClose();
-    } catch (error) {
-      console.error('Error updating task:', error);
-    }
+  }
+
+  private emitUpdatedTask(updates: Partial<Task>) {
+    const updatedTask: Task = { ...this.task!, ...updates };
+    this.taskUpdated.emit(updatedTask);
   }
 
   resetForm() {
@@ -212,6 +209,10 @@ export class EditTaskModal implements OnInit, OnChanges {
     this.priority = 'medium';
     this.selectedContactIds = [];
     this.subtasks = [];
+    this.resetErrors();
+  }
+
+  private resetErrors() {
     this.titleError = false;
     this.dueDateError = false;
     this.dueDateErrorMessage = 'This field is required';

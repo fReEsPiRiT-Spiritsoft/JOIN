@@ -62,12 +62,13 @@ export class TaskCardEdit implements OnInit, OnChanges {
   }
 
   async ngOnChanges(changes: SimpleChanges) {
-    if (changes['showModal'] && this.showModal && this.task) {
-      await this.ensureContactsLoaded();
-      this.populateForm();
-    }
-    if (changes['task'] && !changes['task'].firstChange && this.showModal && this.task) {
-      this.populateForm();
+    if (changes['showModal']) {
+      if (this.showModal && this.task) {
+        await this.ensureContactsLoaded();
+        this.populateForm();
+      } else if (!this.showModal) {
+        this.resetForm();
+      }
     }
   }
 
@@ -176,11 +177,16 @@ export class TaskCardEdit implements OnInit, OnChanges {
     const updates = this.buildTaskUpdates();
     try {
       await this.taskService.updateTask(this.task.id, updates);
-      this.emitUpdatedTask(updates);
-      this.onClose();
+      const updatedTask = this.buildUpdatedTask(updates);
+      this.taskUpdated.emit(updatedTask);
+      this.closeModal.emit();
     } catch (error) {
       console.error('Error updating task:', error);
     }
+  }
+
+  private buildUpdatedTask(updates: Partial<Task>): Task {
+    return { ...this.task!, ...updates };
   }
 
   private buildTaskUpdates(): Partial<Task> {
@@ -194,11 +200,6 @@ export class TaskCardEdit implements OnInit, OnChanges {
       subtasks: [...this.subtasks],
       updatedAt: Timestamp.now(),
     };
-  }
-
-  private emitUpdatedTask(updates: Partial<Task>) {
-    const updatedTask: Task = { ...this.task!, ...updates };
-    this.taskUpdated.emit(updatedTask);
   }
 
   resetForm() {
@@ -219,7 +220,6 @@ export class TaskCardEdit implements OnInit, OnChanges {
   }
 
   onClose() {
-    this.resetForm();
     this.closeModal.emit();
   }
 

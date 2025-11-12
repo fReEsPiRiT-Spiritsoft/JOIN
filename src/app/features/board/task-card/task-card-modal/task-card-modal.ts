@@ -176,7 +176,6 @@ export class TaskCardModal implements OnInit, OnChanges {
     this.task = { ...updatedTask };
     await this.loadAssignedContacts();
     this.editTask.emit(updatedTask);
-    this.closeEditModal();
   }
 
   async onDelete() {

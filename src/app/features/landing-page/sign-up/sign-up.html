@@ -29,7 +29,8 @@
             <!-- Password Input -->
             <div class="input-group" [class.has-error]="fieldErrors['password']">
                 <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password"
-                    placeholder="Password" class="form-input" [attr.data-error]="fieldErrors['password']" (keyup)="validateField()" />
+                    placeholder="Password" class="form-input" [attr.data-error]="fieldErrors['password']"
+                    (keyup)="validateField()" />
                 <img [src]="passwordIconSrc" alt="Password" class="input-icon input-icon-clickable"
                     (mouseenter)="onPasswordIconHover(true)" (mouseleave)="onPasswordIconHover(false)"
                     (click)="togglePasswordVisibility()" />
@@ -60,10 +61,10 @@
                         I accept the <a routerLink="/privacy-policy" class="privacy-link">Privacy policy</a>
                     </span>
                 </label>
-            </div>
 
-            <div class="error-message" [class.visible]="errorMessage">
-                {{ errorMessage }}
+                <div class="error-message" [class.visible]="errorMessage">
+                    {{ errorMessage }}
+                </div>
             </div>
 
 

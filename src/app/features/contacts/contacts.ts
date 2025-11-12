@@ -7,6 +7,10 @@ import { ContactList } from './contact-list/contact-list';
 import { ContactDetails } from './contact-details/contact-details';
 import { ContactForm } from './contact-form/contact-form';
 
+/**
+ * Main contacts management component.
+ * Handles contact CRUD operations, modal states, and contact selection.
+ */
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.html',
@@ -15,23 +19,38 @@ import { ContactForm } from './contact-form/contact-form';
   imports: [FormsModule, ContactList, ContactDetails, ContactForm],
 })
 export class Contacts implements OnInit {
+  /** Array of all contacts loaded from the database */
   contacts: Contact[] = [];
+  /** Currently selected contact for detail view */
   selectedContact: Contact | null = null;
+  /** Controls visibility of the add/edit contact modal */
   showAddModal = false;
+  /** Controls visibility of the delete confirmation modal */
   showDeleteModal = false;
+  /** Temporary contact object for create/edit operations */
   newContact: Partial<Contact> = {};
+  /** Controls visibility of success animation */
   showSuccess = false;
+  /** Indicates whether contacts are currently being loaded */
   isLoading = true;
 
   private contactService = inject(ContactService);
   private firestore = inject(Firestore);
 
+  /** Indicates whether the form is in edit mode (true) or create mode (false) */
   editMode = false;
 
+  /**
+   * Lifecycle hook that runs on component initialization.
+   * Loads all contacts from the database.
+   */
   ngOnInit() {
     this.loadContacts();
   }
 
+  /**
+   * Loads all contacts from the database and updates loading state.
+   */
   async loadContacts() {
     this.isLoading = true;
     try {
@@ -41,14 +60,28 @@ export class Contacts implements OnInit {
     }
   }
 
+  /**
+   * Sets the selected contact for detail view.
+   * 
+   * @param contact - The contact to select
+   */
   selectContact(contact: Contact) {
     this.selectedContact = contact;
   }
 
+  /**
+   * Clears the currently selected contact.
+   */
   deselectContact() {
     this.selectedContact = null;
   }
 
+  /**
+   * Opens the add/edit contact modal.
+   * If a contact is provided, opens in edit mode; otherwise opens in create mode.
+   * 
+   * @param editContact - Optional contact to edit. If omitted, opens create form.
+   */
   openAddModal(editContact?: Contact) {
     this.showAddModal = true;
     if (editContact) {
@@ -60,12 +93,18 @@ export class Contacts implements OnInit {
     }
   }
 
+  /**
+   * Closes the add/edit modal and resets form state.
+   */
   closeAddModal() {
     this.showAddModal = false;
     this.editMode = false;
     this.newContact = {};
   }
 
+  /**
+   * Displays the success animation for 2 seconds.
+   */
   showSuccessAnimation() {
     this.showSuccess = true;
     setTimeout(() => {
@@ -73,6 +112,11 @@ export class Contacts implements OnInit {
     }, 2000);
   }
 
+  /**
+   * Creates a new contact in Firestore and updates local state.
+   * 
+   * @param contactData - The contact data to create
+   */
   async handleCreateContact(contactData: Partial<Contact>) {
     const contactsRef = collection(this.firestore, 'contacts');
     const docRef = await addDoc(contactsRef, contactData);
@@ -84,6 +128,11 @@ export class Contacts implements OnInit {
     this.showSuccessAnimation();
   }
 
+  /**
+   * Updates an existing contact in Firestore and local state.
+   * 
+   * @param contactData - The contact data to update (must include id)
+   */
   async handleSaveContact(contactData: Partial<Contact>) {
     if (!contactData.id) return;
 
@@ -93,6 +142,11 @@ export class Contacts implements OnInit {
     this.closeAddModal();
   }
 
+  /**
+   * Updates a contact in Firestore.
+   * 
+   * @param contactData - The contact data to update in Firestore
+   */
   private async updateContactInFirestore(contactData: Partial<Contact>): Promise<void> {
     const contactRef = doc(this.firestore, 'contacts', contactData.id!);
     await updateDoc(contactRef, {
@@ -103,6 +157,11 @@ export class Contacts implements OnInit {
     });
   }
 
+  /**
+   * Updates a contact in the local contacts array and selection.
+   * 
+   * @param contactData - The contact data to update locally
+   */
   private updateLocalContact(contactData: Partial<Contact>): void {
     const idx = this.contacts.findIndex((c) => c.id === contactData.id);
     if (idx > -1) {
@@ -111,14 +170,23 @@ export class Contacts implements OnInit {
     }
   }
 
+  /**
+   * Opens the delete confirmation modal.
+   */
   openDeleteModal() {
     this.showDeleteModal = true;
   }
 
+  /**
+   * Closes the delete confirmation modal.
+   */
   closeDeleteModal() {
     this.showDeleteModal = false;
   }
 
+  /**
+   * Confirms and executes the delete operation for the selected contact.
+   */
   async confirmDelete() {
     if (this.selectedContact) {
       await this.deleteContact(this.selectedContact);
@@ -126,6 +194,12 @@ export class Contacts implements OnInit {
     }
   }
 
+  /**
+   * Deletes a contact from Firestore and updates local state.
+   * Deselects the contact if it was currently selected.
+   * 
+   * @param contact - The contact to delete
+   */
   async deleteContact(contact: Contact) {
     if (!contact.id) return;
     const contactRef = doc(this.firestore, 'contacts', contact.id);
@@ -137,15 +211,25 @@ export class Contacts implements OnInit {
     }
   }
 
+  /**
+   * Reloads all contacts from the database.
+   */
   async reloadContacts() {
     this.contacts = await this.contactService.getAllContacts();
   }
 
+  /**
+   * Closes the add/edit modal and opens the delete modal.
+   * Used when deleting a contact from the edit form.
+   */
   openDeleteModalFromEdit() {
     this.closeAddModal();
     this.openDeleteModal();
   }
 
+  /**
+   * Handles the Escape key press to close the delete modal.
+   */
   @HostListener('document:keydown.escape')
   onEscapeKey() {
     if (this.showDeleteModal) {
@@ -153,10 +237,21 @@ export class Contacts implements OnInit {
     }
   }
 
+  /**
+   * Handles clicks on the delete modal overlay to close it.
+   * 
+   * @param event - The mouse event from the overlay click
+   */
   onDeleteOverlayClick(event: MouseEvent) {
     this.closeDeleteModal();
   }
 
+  /**
+   * Prevents click propagation on the delete modal content.
+   * Ensures clicking inside the modal doesn't close it.
+   * 
+   * @param event - The mouse event to stop propagation on
+   */
   onDeleteModalClick(event: MouseEvent) {
     event.stopPropagation();
   }

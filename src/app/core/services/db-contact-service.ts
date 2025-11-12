@@ -1,3 +1,12 @@
+/**
+ * Service for accessing contact data from Firestore.
+ *
+ * @method getAllContacts
+ *   Retrieves all contacts from the 'contacts' collection in Firestore.
+ *   - Returns a Promise that resolves to an array of Contact objects.
+ *   - Each contact includes its Firestore document ID and data.
+ */
+
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { Contact } from '../interfaces/db-contact-interface';

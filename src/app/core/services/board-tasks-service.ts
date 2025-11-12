@@ -127,14 +127,12 @@ export class BoardTasksService {
   async createTask(task: Omit<Task, 'id' | 'createdAt'>): Promise<string> {
     const user = this.authService.getCurrentUser();
     const currentViewMode = this.viewModeSubject.value;
-
     const taskData = {
       ...task,
       isPrivate: currentViewMode === 'private',
       ownerId: user?.id || 'guest',
       createdAt: Timestamp.now(),
     };
-
     const docRef = await addDoc(this.tasksCollection, taskData);
     return docRef.id;
   }

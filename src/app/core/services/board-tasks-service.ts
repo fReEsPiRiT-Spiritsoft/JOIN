@@ -14,7 +14,7 @@ import {
   getDoc,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, filter } from 'rxjs/operators';
 import { Task, Subtask, BoardSettings } from '../interfaces/board-tasks-interface';
 import { AuthService } from './auth-service';
 
@@ -112,7 +112,7 @@ export class BoardTasksService {
   getAllTasks(): Observable<Task[]> {
     return combineLatest([
       this.viewMode$,
-      this.authService.currentUser$
+      this.authService.currentUser$.pipe(filter(user => !!user))
     ]).pipe(
       switchMap(([viewMode, user]) => this.resolveTasks(viewMode, user))
     );

@@ -13,10 +13,26 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-height: 825px;
   max-width: 1688px;
-  overflow: hidden;
+  overflow-y: auto;
   position: relative;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f6f7f8;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #a8a8a8;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #888;
+  }
 }
 
 .greeting-content {

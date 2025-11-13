@@ -5,11 +5,7 @@ import { Header } from './shared/components/header/header';
 import { Navbar } from './shared/components/navbar/navbar';
 import { ContactService } from './core/services/db-contact-service';
 import { ContactHelper, Contact } from './core/interfaces/db-contact-interface';
-import { BoardTasksService } from './core/services/board-tasks-service';
-import { Task } from './core/interfaces/board-tasks-interface';
 import { filter } from 'rxjs/operators';
-import { Subscription, timer } from 'rxjs';
-
 
 /**
  * Root component of the application.
@@ -24,15 +20,12 @@ import { Subscription, timer } from 'rxjs';
 export class App implements OnInit {
   /** Array of all contacts loaded from the database */
   contacts: Contact[] = [];
-  tasks: Task[] = [];
 
   /** Controls visibility of header and navigation components */
   showNavigation = false;
 
   private contactService = inject(ContactService);
-  private boardTasksService = inject(BoardTasksService);
   private router = inject(Router);
-  private firebaseTimeout: Subscription | null = null;
 
   /**
    * Lifecycle hook that runs on component initialization.
@@ -40,38 +33,16 @@ export class App implements OnInit {
    */
   async ngOnInit() {
     this.checkRoute(this.router.url);
-    this.startFirebaseTimeout();
-    this.contactService.getAllContacts()
-      .then((contacts) => {
-        this.contacts = contacts;
-        this.stopFirebaseTimeoutIfDataLoaded();
-      })
-      .catch((error) => {
-        console.error('Error loading contacts:', error);
-        window.location.reload();
-      });
-    this.boardTasksService.getAllTasks().subscribe({
-      next: (tasks) => {
-        this.tasks = tasks;
-        this.stopFirebaseTimeoutIfDataLoaded();
-      },
-      error: (error) => {
-        console.error('Error loading tasks:', error);
-        window.location.reload();
-      }
+
+    this.contactService.getAllContacts().then((contacts) => {
+      this.contacts = contacts;
     });
+
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         this.checkRoute(event.url);
       });
-  }
-
-  /** Stops the timeout only if at least one array (contacts or tasks) is loaded */
-  private stopFirebaseTimeoutIfDataLoaded() {
-    if ((this.contacts && this.contacts.length > 0) || (this.tasks && this.tasks.length > 0)) {
-      this.stopFirebaseTimeout();
-    }
   }
 
   /**
@@ -83,23 +54,5 @@ export class App implements OnInit {
   private checkRoute(url: string) {
     const authRoutes = ['/', '/login', '/signup'];
     this.showNavigation = !authRoutes.includes(url);
-  }
-
-  /** Starts a timeout that reloads the page if no contacts are loaded within 4 seconds */
-  private startFirebaseTimeout() {
-    this.firebaseTimeout = timer(4000).subscribe(() => {
-      if (!this.contacts || this.contacts.length === 0) {
-        console.warn('No data from Firebase, reloading page...');
-        window.location.reload();
-      }
-    });
-  }
-
-  /** Stops the Firebase data loading timeout */
-  private stopFirebaseTimeout() {
-    if (this.firebaseTimeout) {
-      this.firebaseTimeout.unsubscribe();
-      this.firebaseTimeout = null;
-    }
   }
 }

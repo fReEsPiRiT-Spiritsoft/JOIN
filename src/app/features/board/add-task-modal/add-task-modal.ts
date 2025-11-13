@@ -63,10 +63,7 @@ export class AddTaskModal implements OnInit {
    */
   @HostListener('document:keydown.escape')
   onEscapeKey() {
-    if (
-      this.formFieldsComponent?.showCategoryDropdown ||
-      this.formFieldsComponent?.showContactDropdown
-    ) {
+    if (this.formFieldsComponent?.showCategoryDropdown) {
       this.formFieldsComponent.closeDropdowns();
       return;
     }
@@ -78,7 +75,7 @@ export class AddTaskModal implements OnInit {
 
   /**
    * Handles document-level clicks to close dropdowns when clicking outside.
-   * 
+   *
    * @param event - The mouse event
    */
   @HostListener('document:click', ['$event'])
@@ -94,7 +91,7 @@ export class AddTaskModal implements OnInit {
   /**
    * Validates all required form fields.
    * Checks title, due date format and validity, and category selection.
-   * 
+   *
    * @returns True if all validations pass, false otherwise
    */
   validateForm(): boolean {
@@ -241,7 +238,7 @@ export class AddTaskModal implements OnInit {
   /**
    * Handles clicks inside the modal content.
    * Closes dropdowns when clicking outside of them and prevents event propagation.
-   * 
+   *
    * @param event - The mouse event
    */
   onModalClick(event: MouseEvent) {
@@ -257,7 +254,7 @@ export class AddTaskModal implements OnInit {
 
   /**
    * Changes subtask close button image on hover.
-   * 
+   *
    * @param imgElement - The close button image element
    */
   onSubtaskCloseHover(imgElement: HTMLImageElement) {
@@ -266,7 +263,7 @@ export class AddTaskModal implements OnInit {
 
   /**
    * Restores subtask close button image when hover ends.
-   * 
+   *
    * @param imgElement - The close button image element
    */
   onSubtaskCloseLeave(imgElement: HTMLImageElement) {

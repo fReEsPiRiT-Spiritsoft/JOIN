@@ -18,7 +18,7 @@ import { Timestamp } from '@angular/fire/firestore';
 import { PrioritySelectorComponent } from '../../../../shared/components/priority-selector/priority-selector';
 import { SubtaskManagerComponent } from '../../../../shared/components/subtask-manager/subtask-manager';
 import { TaskCardEditFormFields } from './task-card-edit-form-fields/task-card-edit-form-fields';
-import { ContactAssignmentDropdownComponent } from './contact-assignment-dropdown/contact-assignment-dropdown';
+import { ContactAssignmentDropdownComponent } from '../../../../shared/components/contact-assignment-dropdown/contact-assignment-dropdown';
 
 /**
  * Task card edit modal component for editing existing tasks.
@@ -72,7 +72,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
   /**
    * Lifecycle hook that runs when input properties change.
    * Populates form when modal opens with a task, resets when modal closes.
-   * 
+   *
    * @param changes - Object containing all input property changes
    */
   async ngOnChanges(changes: SimpleChanges) {
@@ -118,7 +118,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
 
   /**
    * Gets today's date as a string in YYYY-MM-DD format.
-   * 
+   *
    * @returns Today's date string
    */
   getTodayDateString(): string {
@@ -169,7 +169,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
 
   /**
    * Validates all form fields.
-   * 
+   *
    * @returns True if all fields are valid, false otherwise
    */
   validateForm(): boolean {
@@ -180,7 +180,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
 
   /**
    * Validates the title field.
-   * 
+   *
    * @returns True if title is not empty, false otherwise
    */
   private validateTitle(): boolean {
@@ -190,7 +190,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
 
   /**
    * Validates the due date field.
-   * 
+   *
    * @returns True if date is present and valid, false otherwise
    */
   private validateDueDate(): boolean {
@@ -204,7 +204,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
 
   /**
    * Validates the date format (DD/MM/YYYY).
-   * 
+   *
    * @returns True if format is valid, false otherwise
    */
   private validateDateFormat(): boolean {
@@ -219,7 +219,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
 
   /**
    * Validates that the date is not in the past.
-   * 
+   *
    * @param day - Day as string
    * @param month - Month as string
    * @param year - Year as string
@@ -257,7 +257,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
 
   /**
    * Builds the complete updated task object.
-   * 
+   *
    * @param updates - Partial task updates
    * @returns Complete updated task object
    */
@@ -267,7 +267,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
 
   /**
    * Builds the task update object from form data.
-   * 
+   *
    * @returns Partial task object with updated fields
    */
   private buildTaskUpdates(): Partial<Task> {
@@ -322,7 +322,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
 
   /**
    * Prevents click propagation on the modal content.
-   * 
+   *
    * @param event - The mouse event to stop propagation on
    */
   onModalClick(event: MouseEvent) {
@@ -331,7 +331,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
 
   /**
    * Changes close button image on hover.
-   * 
+   *
    * @param imgElement - The close button image element
    */
   onCloseHover(imgElement: HTMLImageElement) {
@@ -340,7 +340,7 @@ export class TaskCardEdit implements OnInit, OnChanges {
 
   /**
    * Restores close button image when hover ends.
-   * 
+   *
    * @param imgElement - The close button image element
    */
   onCloseLeave(imgElement: HTMLImageElement) {

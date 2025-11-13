@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Contact } from '../../../../../core/interfaces/db-contact-interface';
+import { Contact } from '../../../core/interfaces/db-contact-interface';
 
 /**
  * Contact assignment dropdown component for selecting and managing assigned contacts.
@@ -104,7 +104,7 @@ export class ContactAssignmentDropdownComponent implements OnInit {
   /**
    * Toggles contact selection status.
    * Adds or removes contact from selected contacts list.
-   * 
+   *
    * @param contactId - The ID of the contact to toggle
    * @param event - Optional mouse event to stop propagation
    */
@@ -123,7 +123,7 @@ export class ContactAssignmentDropdownComponent implements OnInit {
 
   /**
    * Updates the contact selection array based on index.
-   * 
+   *
    * @param index - Index of contact in selected array (-1 if not selected)
    * @param updatedIds - Array of selected contact IDs to update
    * @param contactId - ID of the contact to add or remove
@@ -138,7 +138,7 @@ export class ContactAssignmentDropdownComponent implements OnInit {
 
   /**
    * Checks if a contact is currently selected.
-   * 
+   *
    * @param contactId - The ID of the contact to check
    * @returns True if contact is selected, false otherwise
    */
@@ -148,7 +148,7 @@ export class ContactAssignmentDropdownComponent implements OnInit {
 
   /**
    * Gets the list of currently selected contacts.
-   * 
+   *
    * @returns Array of selected Contact objects
    */
   getSelectedContacts(): Contact[] {
@@ -158,7 +158,7 @@ export class ContactAssignmentDropdownComponent implements OnInit {
   /**
    * Generates initials from a contact's firstname.
    * Returns first letter for single names, or first and last initial for multiple names.
-   * 
+   *
    * @param contact - The contact to generate initials for
    * @returns Uppercase initials (1-2 characters), or empty string if no firstname
    */
@@ -173,7 +173,7 @@ export class ContactAssignmentDropdownComponent implements OnInit {
 
   /**
    * Extracts first and last initials from name parts.
-   * 
+   *
    * @param nameParts - Array of name parts
    * @returns Uppercase first and last initials
    */
@@ -186,7 +186,7 @@ export class ContactAssignmentDropdownComponent implements OnInit {
   /**
    * Generates a consistent avatar color for a contact based on their ID.
    * Uses a hash function to map the ID to a color from the palette.
-   * 
+   *
    * @param contact - The contact to generate a color for
    * @returns Hex color code from the color palette
    */
@@ -211,7 +211,7 @@ export class ContactAssignmentDropdownComponent implements OnInit {
 
   /**
    * Changes arrow image on hover based on dropdown state.
-   * 
+   *
    * @param imgElement - The arrow image element
    * @param isDropdownOpen - Current dropdown open state
    */
@@ -225,7 +225,7 @@ export class ContactAssignmentDropdownComponent implements OnInit {
 
   /**
    * Restores arrow image when hover ends based on dropdown state.
-   * 
+   *
    * @param imgElement - The arrow image element
    * @param isDropdownOpen - Current dropdown open state
    */

@@ -17,6 +17,10 @@ import { PrioritySelectorComponent } from '../../../../shared/components/priorit
 import { SubtaskManagerComponent } from '../../../../shared/components/subtask-manager/subtask-manager';
 import { ContactAssignmentDropdownComponent } from '../../../../shared/components/contact-assignment-dropdown/contact-assignment-dropdown';
 
+/**
+ * Form fields component for add task modal.
+ * Handles all input fields, validation, and data binding for task creation.
+ */
 @Component({
   selector: 'app-add-task-modal-form-fields',
   imports: [
@@ -64,18 +68,34 @@ export class AddTaskModalFormFields implements OnInit {
 
   @ViewChild('datePicker') datePicker!: ElementRef<HTMLInputElement>;
 
+  /**
+   * Lifecycle hook that runs on component initialization.
+   * Loads all contacts from the database.
+   */
   async ngOnInit() {
     await this.loadContacts();
   }
 
+  /**
+   * Loads all contacts from the database.
+   */
   async loadContacts() {
     this.contacts = await this.contactService.getAllContacts();
   }
 
+  /**
+   * Toggles the visibility of the category dropdown.
+   */
   toggleCategoryDropdown() {
     this.showCategoryDropdown = !this.showCategoryDropdown;
   }
 
+  /**
+   * Selects a category and closes the dropdown.
+   * Clears category error and emits the selection.
+   * 
+   * @param category - The selected category
+   */
   selectCategory(category: string) {
     this.category = category;
     this.categoryError = false;
@@ -83,6 +103,12 @@ export class AddTaskModalFormFields implements OnInit {
     this.showCategoryDropdown = false;
   }
 
+  /**
+   * Formats date input as DD/MM/YYYY while typing.
+   * Automatically adds slashes at appropriate positions.
+   * 
+   * @param event - The input event
+   */
   formatDateInput(event: Event) {
     const input = event.target as HTMLInputElement;
     let value = input.value.replace(/\D/g, '');
@@ -98,10 +124,19 @@ export class AddTaskModalFormFields implements OnInit {
     this.dueDateChange.emit(this.dueDate);
   }
 
+  /**
+   * Opens the native date picker dialog.
+   */
   openDatePicker() {
     this.datePicker.nativeElement.showPicker();
   }
 
+  /**
+   * Handles date selection from the native date picker.
+   * Converts YYYY-MM-DD to DD/MM/YYYY format.
+   * 
+   * @param event - The change event from the date picker
+   */
   onDatePickerChange(event: Event) {
     const input = event.target as HTMLInputElement;
     const dateValue = input.value;
@@ -113,6 +148,11 @@ export class AddTaskModalFormFields implements OnInit {
     }
   }
 
+  /**
+   * Gets today's date as a string in YYYY-MM-DD format.
+   * 
+   * @returns Today's date string
+   */
   getTodayDateString(): string {
     const today = new Date();
     const year = today.getFullYear();
@@ -121,6 +161,12 @@ export class AddTaskModalFormFields implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
+  /**
+   * Changes arrow image on hover based on dropdown state.
+   * 
+   * @param imgElement - The arrow image element
+   * @param isDropdownOpen - Current dropdown open state
+   */
   onArrowHover(imgElement: HTMLImageElement, isDropdownOpen: boolean) {
     if (isDropdownOpen) {
       imgElement.src = 'assets/arrow-up-variant2.png';
@@ -129,6 +175,12 @@ export class AddTaskModalFormFields implements OnInit {
     }
   }
 
+  /**
+   * Restores arrow image when hover ends based on dropdown state.
+   * 
+   * @param imgElement - The arrow image element
+   * @param isDropdownOpen - Current dropdown open state
+   */
   onArrowLeave(imgElement: HTMLImageElement, isDropdownOpen: boolean) {
     if (isDropdownOpen) {
       imgElement.src = 'assets/board/arrow-drop-up-transparent.png';
@@ -137,19 +189,32 @@ export class AddTaskModalFormFields implements OnInit {
     }
   }
 
+  /**
+   * Handles title input changes.
+   * Clears title error and emits the new value.
+   */
   onTitleInput() {
     this.titleError = false;
     this.titleChange.emit(this.title);
   }
 
+  /**
+   * Handles description changes and emits the new value.
+   */
   onDescriptionChange() {
     this.descriptionChange.emit(this.description);
   }
 
+  /**
+   * Handles date changes and clears date error.
+   */
   onDateChange() {
     this.dueDateError = false;
   }
 
+  /**
+   * Closes all open dropdowns.
+   */
   closeDropdowns() {
     this.showCategoryDropdown = false;
   }
